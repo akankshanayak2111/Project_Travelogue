@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form id="user-criteria" action="/flights" method="POST">
+
+  <div>
+    <label>Enter your city of origin 
+      <input id="origin" type="text" name="origin">
+    </label>
+</div>
+<br>
+
+
+<div>
+  <label>Enter your budget $
+    <input id="budget" type="number" name="budget">
+  </label>
+</div>
+<br>
+
+<div>
+  <label>Start Date
+    <input id="start-date" type="date" name="start-date">
+  </label>
+</div>
+<br>
+
+
+<div>
+  <label>Return Date
+    <input id="return-date" type="date" name="return-date">
+  </label>
+</div>
+<br>
+
+<div>
+  <label>Number of passengers
+    <input id="passengers" type="number" name="passengers">
+  </label>
+</div>
+<br>
+
+
+<div>
+  <input type="submit">
+</div>
+
+</form>
+
+<p><a href="/register">Register</a></p>
+<!-- <p><a href="/login">Log In</a></p> -->
+
+
+
+
+
+
+
+
+{% endblock %}
