@@ -126,22 +126,24 @@ response_dict = {
 
     for item in flights['trips']['tripOption']:
         while index in range(0, 20):
-            dict_flights['start']['carrier'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][0]['carrier']
-            dict_flights['start']['flight_no'] = flights['trips']['tripOption'][index]['slice'][0]['segment'][0]['flight']['number']
-            dict_flights['start']['origin'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][0]['origin']
-            dict_flights['start']['destination'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][0]['destination']
-            dict_flights['start']['time_departure'] = flights['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['departureTime']
-            dict_flights['start']['time_arrival'] = flights['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['arrivalTime']
+            flights_sorted = sorted(flights, key=lambda k: flights['trips']['tripOption'][index]['pricing'][0]['saleTotal']['saleTotal'])
+
+            dict_flights['start']['carrier'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['fare'][0]['carrier']
+            dict_flights['start']['flight_no'] = flights_sorted['trips']['tripOption'][index]['slice'][0]['segment'][0]['flight']['number']
+            dict_flights['start']['origin'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['fare'][0]['origin']
+            dict_flights['start']['destination'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['fare'][0]['destination']
+            dict_flights['start']['time_departure'] = flights_sorted['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['departureTime']
+            dict_flights['start']['time_arrival'] = flights_sorted['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['arrivalTime']
             
 
-            dict_flights['return']['carrier'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][1]['carrier']
-            dict_flights['return']['flight_no'] = flights['trips']['tripOption'][index]['slice'][1]['segment'][0]['flight']['number']
-            dict_flights['return']['origin'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][1]['origin']
-            dict_flights['return']['destination'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][1]['destination']
-            dict_flights['return']['time_departure'] = flights['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['departureTime']
-            dict_flights['return']['time_arrival'] = flights['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['arrivalTime']
+            dict_flights['return']['carrier'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['fare'][1]['carrier']
+            dict_flights['return']['flight_no'] = flights_sorted['trips']['tripOption'][index]['slice'][1]['segment'][0]['flight']['number']
+            dict_flights['return']['origin'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['fare'][1]['origin']
+            dict_flights['return']['destination'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['fare'][1]['destination']
+            dict_flights['return']['time_departure'] = flights_sorted['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['departureTime']
+            dict_flights['return']['time_arrival'] = flights_sorted['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['arrivalTime']
             
-            dict_flights['total_cost'] = flights['trips']['tripOption'][index]['pricing'][0]['saleTotal']
+            dict_flights['total_cost'] = flights_sorted['trips']['tripOption'][index]['pricing'][0]['saleTotal']
 
 
 

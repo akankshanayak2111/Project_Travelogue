@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div>
+    {% for dest, flights in all_flights.items()}
+        <ul>
+            {%for each_fl in flights %}
+                {% for item in each_fl %}
+                    {% for k, v in item.items()}
 
-{{flights}}
+                        <li>{{ k, v }}</li>
 
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}        
 
+        </ul>
+
+    {% endfor %}
+</div>
 
 {% endblock %}
