@@ -11,9 +11,9 @@ from money import Money
 from pprint import pprint
 
 
-def make_request():
+def make_request(data):
     """Sends request to the API."""
-    pass
+    json.dump(, open(‘file.json’, ‘w’)
 
 
 def loads_flights_json():
@@ -23,7 +23,7 @@ def loads_flights_json():
 
     flight_dict = json.loads(json_string)
     pprint(flight_dict)
-    
+
     # print flight_dict
 
 

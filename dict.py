@@ -111,13 +111,43 @@ flights = [
 # Response:
 
 response_dict = {
-'Airline': flights['trips']['data']['carrier'][0]['name']
-'flight_no': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['flight']['number']
-'origin': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['origin']
-'destination':flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['destination']
-'date_departure': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['departureTime']
-'date_arrival': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['arrivalTime']
-'cost':flights['trips']['tripOption'][0]['saleTotal']
+'Airline': flights['trips']['data']['carrier'][0]['name'],
+'flight_no': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['flight']['number'],
+'origin': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['origin'],
+'destination':flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['destination'],
+'date_departure': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['departureTime'],
+'date_arrival': flights['trips']['tripOption'][0]['slice'][0]['segment'][0]['leg'][0]['arrivalTime'],
+'cost':flights['trips']['tripOption'][0]['saleTotal'],
 
     
 }
+
+
+
+    for item in flights['trips']['tripOption']:
+        while index in range(0, 20):
+            dict_flights['start']['carrier'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][0]['carrier']
+            dict_flights['start']['flight_no'] = flights['trips']['tripOption'][index]['slice'][0]['segment'][0]['flight']['number']
+            dict_flights['start']['origin'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][0]['origin']
+            dict_flights['start']['destination'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][0]['destination']
+            dict_flights['start']['time_departure'] = flights['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['departureTime']
+            dict_flights['start']['time_arrival'] = flights['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['arrivalTime']
+            
+
+            dict_flights['return']['carrier'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][1]['carrier']
+            dict_flights['return']['flight_no'] = flights['trips']['tripOption'][index]['slice'][1]['segment'][0]['flight']['number']
+            dict_flights['return']['origin'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][1]['origin']
+            dict_flights['return']['destination'] = flights['trips']['tripOption'][index]['pricing'][0]['fare'][1]['destination']
+            dict_flights['return']['time_departure'] = flights['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['departureTime']
+            dict_flights['return']['time_arrival'] = flights['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['arrivalTime']
+            
+            dict_flights['total_cost'] = flights['trips']['tripOption'][index]['pricing'][0]['saleTotal']
+
+
+
+
+    
+
+
+
+

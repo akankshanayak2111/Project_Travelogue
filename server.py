@@ -69,9 +69,14 @@ def show_flights():
 
     
 
-    access_key = os.environ["FLIGHTS_KEY"] 
+    access_key = os.environ["FLIGHTS_KEY"]
 
-    destinations = ["SFO", "LAX", "ORD", "PDX"]
+    destinations = ["LAS", "LAX"]
+
+    all_flights = {}
+    dict_flights['start'] = {}
+    dict_flights['return'] = {}
+    index = 0
 
     for destination in destinations:
         if destination != origin:
@@ -122,11 +127,65 @@ def show_flights():
               }
             } 
 
-    url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key={}".format(access_key) 
+        url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key={}".format(access_key) 
 
-    r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
 
-    flights = r.json()
+
+        r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
+
+        flights = r.json()
+
+        # with open('response_'+destination+'.json', 'w') as outfile:
+        #     json.dump(flights, outfile)
+
+
+
+        # dict with keys as destination name and values as json for each 
+        all_flights[destination] = flights
+        print all_flights.keys()
+
+
+        
+
+        for item in all_flights[destination]['trips']['tripOption'][0:5]:
+
+            
+    
+                dict_flights[destination]['start']['carrier'] = item['pricing'][0]['fare'][0]['carrier']
+                # dict_flights['start']['flight_no'] = item['slice'][0]['segment'][0]['flight']['number']
+                # dict_flights['start']['origin'] = item[[index]['pricing'][0]['fare'][0]['origin']
+                # dict_flights['start']['destination'] = item[index]['pricing'][0]['fare'][0]['destination']
+                # dict_flights['start']['time_departure'] = all_flights[destination]['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['departureTime']
+                # dict_flights['start']['time_arrival'] = all_flights[destination]['trips']['tripOption'][index]['slice'][0]['segment'][0]['leg'][0]['arrivalTime']
+                
+
+                # dict_flights['return']['carrier'] = all_flights[destination]['trips']['tripOption'][index]['pricing'][0]['fare'][1]['carrier']
+                # dict_flights['return']['flight_no'] = all_flights[destination]['trips']['tripOption'][index]['slice'][1]['segment'][0]['flight']['number']
+                # dict_flights['return']['origin'] = all_flights[destination]['trips']['tripOption'][index]['pricing'][0]['fare'][1]['origin']
+                # dict_flights['return']['destination'] = all_flights[destination]['trips']['tripOption'][index]['pricing'][0]['fare'][1]['destination']
+                # dict_flights['return']['time_departure'] = all_flights[destination]['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['departureTime']
+                # dict_flights['return']['time_arrival'] = all_flights[destination]['trips']['tripOption'][index]['slice'][1]['segment'][0]['leg'][0]['arrivalTime']
+                
+                # dict_flights['total_cost'] = all_flights[destination]['trips']['tripOption'][index]['pricing'][0]['saleTotal']
+                # index += 1
+                # print dict_flights
+
+                # return dict_flights
+
+        
+        # with open('response_'+destination+'.json', 'w') as outfile:
+            # json.dump(flights, outfile)
+
+# for item in all_flights[destination]['trips']['tripOption'][0:5]:
+#      ...:     for k, v in item.items():
+#      ...:         for p in item['pricing']:
+#      ...:             for k1, v1 in p.items():
+#      ...:                 for f in p['fare']:
+#      ...:                     for k2, v2 in f.items():
+#      ...:                         print f['origin']
+
+
+    
 
     
     
