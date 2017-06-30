@@ -61,6 +61,8 @@ def make_request():
         r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
 
         flights = r.json()
+        print flights
+        print flights.keys()
 
         # to store json from each destination in a separate file
         # with open('response_'+destination+'.json', 'w') as outfile:
@@ -85,12 +87,14 @@ def make_request():
             round_trip.append(flight_price)
             flight_results.append(round_trip)
 
-        print flight_results
+        # print flight_results
 
-        # dict with keys as destination name and values as json for each 
+    #     # dict with keys as destination name and values as json for each 
         all_flights[destination] = flight_results
         print all_flights
         return all_flights
+
+
 
 
 # def loads_flights_json():

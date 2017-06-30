@@ -59,8 +59,88 @@ def register_process():
 @app.route('/flights', methods=['POST'])
 def show_flights():
     """Returns the flights information based on user's search criteria."""
+    # origin = request.form.get("origin")
+    # user_budget = request.form.get("budget")
+    # budget = Money(user_budget, 'USD')
+    # budget = budget.currency + str(budget.amount)
+
+    # date_start = request.form.get("start-date")
+    # date_return = request.form.get("return-date")
+    # passenger = request.form.get("passengers")
+
+    # access_key = os.environ["FLIGHTS_KEY"]
+    # destinations = ["LAS", "LAX"]
+
+    # all_flights = {}
+    # for destination in destinations:
+    #     if destination != origin:
+    #         payload = {
+    #           "request": {
+    #             "passengers": {
+    #               "adultCount": passenger,
+    #               "childCount": None,
+    #               "infantInLapCount": None,
+    #               "infantInSeatCount": None,
+    #               "seniorCount": None
+    #             },
+    #             "slice": [
+    #               {
+    #                 "origin": origin,
+    #                 "destination": destination,
+    #                 "date": date_start,
+    #                 },
+    #               {
+    #                 "origin": destination,
+    #                 "destination": origin,
+    #                 "date": date_return,
+    #                 },
+    #             ],
+    #             "maxPrice": budget,
+    #           }
+    #         } 
+
+    #         print payload
+    #     url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key={}".format(access_key) 
+
+
+
+    #     r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
+
+    #     flights = r.json()
+    #     print flights
+    #     print flights.keys()
+
+    #     # to store json from each destination in a separate file
+    #     # with open('response_'+destination+'.json', 'w') as outfile:
+    #     #     json.dump(flights, outfile)
+
+
+    #     flight_results =[]
+
+    #     trip_options = flights['trips']['tripOption'][0:5]
+    #     for trip in trip_options:
+    #         round_trip = []
+    #         for flight in trip['slice']:
+    #             flight_info = {}
+    #             flight_info['departure_time'] = flight['segment'][0]['leg'][0]['departureTime']
+    #             flight_info['origin'] =flight['segment'][0]['leg'][0]['origin']
+    #             flight_info['destination'] = flight['segment'][0]['leg'][0]['destination']
+    #             flight_info['carrier'] = flight['segment'][0]['flight']['carrier']
+    #             flight_info['number'] = flight['segment'][0]['flight']['number']
+    #             round_trip.append(flight_info)
+    #         flight_price = {}
+    #         flight_price['price'] = trip['saleTotal']
+    #         round_trip.append(flight_price)
+    #         flight_results.append(round_trip)
+
+    #     print flight_results
+
+    #     # dict with keys as destination name and values as json for each 
+    #     all_flights[destination] = flight_results
+    #     print all_flights
+    #     return all_flights
     
-    make_request()
+    all_flights = make_request()
    
     # flights_sorted = sorted(flights, key=lambda k: k['cost'])
 

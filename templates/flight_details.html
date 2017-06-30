@@ -2,11 +2,11 @@
 {% block content %}
 
 <div>
-    {% for dest, flights in all_flights.items()}
+    {% for dest, flights in all_flights.items() %}
         <ul>
             {%for each_fl in flights %}
                 {% for item in each_fl %}
-                    {% for k, v in item.items()}
+                    {% for k, v in item.items() %}
 
                         <li>{{ k, v }}</li>
 
