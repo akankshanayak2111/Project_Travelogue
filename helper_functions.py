@@ -51,6 +51,7 @@ def make_request():
                     },
                 ],
                 "maxPrice": budget,
+                "solutions": 10
               }
             } 
 
@@ -71,7 +72,7 @@ def make_request():
 
         flight_results =[]
 
-        trip_options = flights['trips']['tripOption'][0:5]
+        trip_options = flights['trips']['tripOption']
         for trip in trip_options:
             round_trip = []
             for flight in trip['slice']:
@@ -87,12 +88,18 @@ def make_request():
             round_trip.append(flight_price)
             flight_results.append(round_trip)
 
-        # print flight_results
+            # print flight_results
 
-    #     # dict with keys as destination name and values as json for each 
+            # dict with keys as destination name and values as json for each 
         all_flights[destination] = flight_results
-        print all_flights
-        return all_flights
+        # print all_flights.keys()
+    return all_flights
+
+    
+
+
+
+
 
 
 

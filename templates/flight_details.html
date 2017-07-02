@@ -4,16 +4,17 @@
 <div>
     {% for dest, flights in all_flights.items() %}
         <ul>
-            {%for each_fl in flights %}
-                {% for item in each_fl %}
-                    {% for k, v in item.items() %}
+            <li>
+                {%for each_fl in flights %}
+                    {% for item in each_fl %}
+                        {% for k, v in item.items() %}
 
-                        <li>{{ k, v }}</li>
+                             {{ k, v }}
 
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-            {% endfor %}        
-
+                {% endfor %}        
+            </li>
         </ul>
 
     {% endfor %}
