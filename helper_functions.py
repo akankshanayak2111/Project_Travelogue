@@ -14,14 +14,14 @@ from pprint import pprint
 
 def make_request():
     """Sends request to the API."""
-    origin = request.form.get("origin")
-    user_budget = request.form.get("budget")
+    origin = request.args.get("origin")
+    user_budget = request.args.get("budget")
     budget = Money(user_budget, 'USD')
     budget = budget.currency + str(budget.amount)
 
-    date_start = request.form.get("start-date")
-    date_return = request.form.get("return-date")
-    passenger = request.form.get("passengers")
+    date_start = request.args.get("start-date")
+    date_return = request.args.get("return-date")
+    passenger = request.args.get("passengers")
 
     access_key = os.environ["FLIGHTS_KEY"]
     destinations = ["LAS", "LAX"]
@@ -69,31 +69,37 @@ def make_request():
         # with open('response_'+destination+'.json', 'w') as outfile:
         #     json.dump(flights, outfile)
 
+        # check to see if destination json is empty or not
+        # if not add destinations to a list
+        # destinations_display = []
+        # if 'tripOption' in flights['trips']:
+        #     destinations_display.append(flights['trips']['tripOption'][0][])
 
-        flight_results =[]
+        # massaging the json and getting values to display to the user
+    #     flight_results =[]
 
-        trip_options = flights['trips']['tripOption']
-        for trip in trip_options:
-            round_trip = []
-            for flight in trip['slice']:
-                flight_info = {}
-                flight_info['departure_time'] = flight['segment'][0]['leg'][0]['departureTime']
-                flight_info['origin'] =flight['segment'][0]['leg'][0]['origin']
-                flight_info['destination'] = flight['segment'][0]['leg'][0]['destination']
-                flight_info['carrier'] = flight['segment'][0]['flight']['carrier']
-                flight_info['number'] = flight['segment'][0]['flight']['number']
-                round_trip.append(flight_info)
-            flight_price = {}
-            flight_price['price'] = trip['saleTotal']
-            round_trip.append(flight_price)
-            flight_results.append(round_trip)
+    #     trip_options = flights['trips']['tripOption']
+    #     for trip in trip_options:
+    #         round_trip = []
+    #         for flight in trip['slice']:
+    #             flight_info = {}
+    #             flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
+    #             flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
+    #             flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
+    #             flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
+    #             flight_info['number'] = str(flight['segment'][0]['flight']['number'])
+    #             round_trip.append(flight_info)
+    #         flight_price = {}
+    #         flight_price['price'] = str(trip['saleTotal'])
+    #         round_trip.append(flight_price)
+    #         flight_results.append(round_trip)
 
-            # print flight_results
+    #         # print flight_results
 
-            # dict with keys as destination name and values as json for each 
-        all_flights[destination] = flight_results
-        # print all_flights.keys()
-    return all_flights
+    #         # dict with keys as destination name and values as json for each 
+    #     all_flights[destination] = flight_results
+    #     # print all_flights.keys()
+    # return all_flights
 
     
 

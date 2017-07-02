@@ -56,7 +56,7 @@ def register_process():
     return redirect("/")
 
 
-@app.route('/flights', methods=['POST'])
+@app.route('/flights', methods=['GET'])
 def show_flights():
     """Returns the flights information based on user's search criteria."""
   
