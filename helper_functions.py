@@ -23,8 +23,8 @@ def make_request():
     date_return = request.args.get("return-date")
     passenger = request.args.get("passengers")
 
-    access_key = os.environ["FLIGHTS_KEY"]
-    destinations = ["LAS", "LAX"]
+    access_key = os.environ["FLIGHTS_KEY1"]
+    destinations = ["ORD", "LAX"]
 
     # all_flights = {}
     destinations_display = []
@@ -75,14 +75,14 @@ def make_request():
         
         if 'tripOption' in flights['trips']:
             destinations_display.append(destination)
-    print destinations_display
+    # print destinations_display
     return destinations_display
 
 
     # if len(destinations_display) == 0:
     #     return "Sorry no flights matched your search criteria"
     # else:
-    # return destinations_display
+    #     return destinations_display
     # print destinations_display
 
 

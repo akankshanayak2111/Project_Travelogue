@@ -68,8 +68,9 @@ def show_destinations():
 # @app.route('/flights/<dest>') 
 # def show_flights():
 #     """Returns the flights for each destination."""
-    # flights_sorted = sorted(flights, key=lambda k: k['cost'])
-    # return render_template("flight_details.html", all_flights=all_flights)
+
+#     # flights_sorted = sorted(flights, key=lambda k: k['cost'])
+#     return render_template("flight_details.html", all_flights=all_flights)
 
 
 
