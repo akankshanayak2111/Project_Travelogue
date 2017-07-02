@@ -26,7 +26,8 @@ def make_request():
     access_key = os.environ["FLIGHTS_KEY"]
     destinations = ["LAS", "LAX"]
 
-    all_flights = {}
+    # all_flights = {}
+    destinations_display = []
     for destination in destinations:
         if destination != origin:
             payload = {
@@ -60,7 +61,7 @@ def make_request():
 
 
         r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
-
+        
         flights = r.json()
         print flights
         print flights.keys()
@@ -71,9 +72,19 @@ def make_request():
 
         # check to see if destination json is empty or not
         # if not add destinations to a list
-        # destinations_display = []
-        # if 'tripOption' in flights['trips']:
-        #     destinations_display.append(flights['trips']['tripOption'][0][])
+        
+        if 'tripOption' in flights['trips']:
+            destinations_display.append(destination)
+    print destinations_display
+    return destinations_display
+
+
+    # if len(destinations_display) == 0:
+    #     return "Sorry no flights matched your search criteria"
+    # else:
+    # return destinations_display
+    # print destinations_display
+
 
         # massaging the json and getting values to display to the user
     #     flight_results =[]

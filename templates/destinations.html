@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for dest in destinations%}
+    <div>
+    <a href="/flights/{{ dest }}">{{ dest }}</a>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

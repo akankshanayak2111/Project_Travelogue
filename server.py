@@ -56,14 +56,20 @@ def register_process():
     return redirect("/")
 
 
-@app.route('/flights', methods=['GET'])
-def show_flights():
-    """Returns the flights information based on user's search criteria."""
+@app.route('/destinations', methods=['GET'])
+def show_destinations():
+    """Returns the destinations based on user's search criteria."""
   
-    all_flights = make_request()
- 
+    destinations_display = make_request()
+
+    return render_template("destinations.html", destinations=destinations_display)
+
+
+# @app.route('/flights/<dest>') 
+# def show_flights():
+#     """Returns the flights for each destination."""
     # flights_sorted = sorted(flights, key=lambda k: k['cost'])
-    return render_template("flight_details.html", all_flights=all_flights)
+    # return render_template("flight_details.html", all_flights=all_flights)
 
 
 
