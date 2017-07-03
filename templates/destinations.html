@@ -8,7 +8,7 @@
         Sorry no flights matched your search criteria
     {% elif destinations|length > 0 %}
         {% for dest in destinations %}
-            <div><a href="/flight_details/{{ dest }}">{{ dest }}</a></div>
+            <div><a id ="{{ dest }}" href="/flight_details/{{ dest }}">{{ dest }}</a></div>
         {% endfor %}
     {% endif %}
 </div>

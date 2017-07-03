@@ -27,11 +27,11 @@ def make_request():
 
     
 
-    access_key = os.environ["FLIGHTS_KEY1"]
+    access_key = os.environ["FLIGHTS_KEY"]
     destinations = ["ORD", "LAS"]
 
-    # initiating a list of destinations to display
-    destinations_display = []
+    
+    all_flights = {}
 
     # Formatting payload according to API request format
     for destination in destinations:
@@ -67,76 +67,76 @@ def make_request():
 
 
         r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
-        
+        global flights
         flights = r.json()
-        print flights
-        print flights.keys()
+
+        # dict with keys as destination name and values as json for each 
+        all_flights[destination] = flights
+    print all_flights.keys()
+    return all_flights
+    
 
         # to store json from each destination in a separate file
         # with open('response_'+destination+'.json', 'w') as outfile:
         #     json.dump(flights, outfile)
 
+def display_destinations():
+    """Displays destinations based on user's search criteria."""
+
+    global flights_all_destinations
+
+    flights_all_destinations = make_request()
+
+    # initiating a list of destinations to display
+    destinations_display = []
 
         # check to see if destination json is empty or not
         # if not add destinations destinations_display
-        if 'tripOption' in flights['trips']:
-            destinations_display.append(destination)
+    for dest, flights in flights_all_destinations.items():
+        if 'tripOption' in flights_all_destinations[dest]['trips']:
+            destinations_display.append(dest)
     
-    # print destinations_display
+    print destinations_display
     return destinations_display
 
 
 
-        # massaging the json and getting values to display to the user
-    #     flight_results =[]
+def get_flight_details(dest):
+    """Shows flight details for a destination."""  
 
-    #     trip_options = flights['trips']['tripOption']
-    #     for trip in trip_options:
-            # round_trip = []
-            # for flight in trip['slice']:
-            #     flight_info = {}
-            #     flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
-            #     flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
-            #     flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
-            #     flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
-            #     flight_info['number'] = str(flight['segment'][0]['flight']['number'])
-            #     round_trip.append(flight_info)
-            # flight_price = {}
-            # flight_price['price'] = str(trip['saleTotal'])
-            # round_trip.append(flight_price)
-            # flight_results.append(round_trip)
 
-    #         # print flight_results
 
-    #         # dict with keys as destination name and values as json for each 
-    #     all_flights[destination] = flight_results
-    #     # print all_flights.keys()
-#     # return all_flights
+    #start with json for a destination based on the one clicked
+    #massage json to get values to display to the user
+    results_destinations = {}
+    flight_results =[]
 
-# def show_flights(destination_json):
-#     """Shows flight details for a destination."""  
+    if dest in flights_all_destinations:
+        trip_options = flights_all_destinations[dest]['trips']['tripOption']
+        for trip in trip_options:
+            round_trip = []
+            for flight in trip['slice']:
+                flight_info = {}
+                flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
+                flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
+                flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
+                flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
+                flight_info['number'] = str(flight['segment'][0]['flight']['number'])
+                round_trip.append(flight_info)
+            flight_price = {}
+            flight_price['price'] = str(trip['saleTotal'])
+            round_trip.append(flight_price)
+            flight_results.append(round_trip)
 
-#     #start with json for a destination based on the one clicked
-#     #massage json to get values to display to the user
-#     flight_results =[]
+    # print flight_results
+    return flight_results
 
-#     trip_options = flights['trips']['tripOption']
-#     for trip in trip_options:
-#         round_trip = []
-#         for flight in trip['slice']:
-#             flight_info = {}
-#             flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
-#             flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
-#             flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
-#             flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
-#             flight_info['number'] = str(flight['segment'][0]['flight']['number'])
-#             round_trip.append(flight_info)
-#         flight_price = {}
-#         flight_price['price'] = str(trip['saleTotal'])
-#         round_trip.append(flight_price)
-#         flight_results.append(round_trip)
+    # print results_destinations.keys()
+    # return results_destinations
 
-        
+
+
+
 
 
 

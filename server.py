@@ -10,7 +10,7 @@ import requests
 import json
 import os
 from money import Money
-from helper_functions import make_request
+from helper_functions import make_request, display_destinations, get_flight_details
 
 
 app = Flask(__name__)
@@ -59,17 +59,22 @@ def index():
 def show_destinations():
     """Returns the destinations based on user's search criteria."""
   
-    destinations_display = make_request()
-
+    destinations_display = display_destinations()
     return render_template("destinations.html", destinations=destinations_display)
 
 
-# @app.route('/flights/<dest>') 
-# def show_flights():
-#     """Returns the flights for each destination."""
+@app.route('/flight_details/<dest>') 
+def show_flights(dest):
+    """Returns the flights for each destination."""
 
-#     # flights_sorted = sorted(flights, key=lambda k: k['cost'])
-#     return render_template("flight_details.html", all_flights=all_flights)
+    flight_results = get_flight_details(dest)
+
+    print flight_results
+
+    # for dest in flights_all_destinations.keys():
+
+    # flights_sorted = sorted(flights, key=lambda k: k['cost'])
+    return render_template("flight_details.html", flight_results=flight_results)
 
 
 
