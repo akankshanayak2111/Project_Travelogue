@@ -3,7 +3,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, User, Movie, Rating
+from model import connect_to_db, db
 import requests
 import json
 import os
@@ -13,21 +13,27 @@ from pprint import pprint
 
 
 def make_request():
-    """Sends request to the API."""
+    """Sends request to the API and adds destinations with non-empty response to a list."""
+
     origin = request.args.get("origin")
     user_budget = request.args.get("budget")
-    budget = Money(user_budget, 'USD')
-    budget = budget.currency + str(budget.amount)
-
     date_start = request.args.get("start-date")
     date_return = request.args.get("return-date")
     passenger = request.args.get("passengers")
 
-    access_key = os.environ["FLIGHTS_KEY1"]
-    destinations = ["ORD", "LAX"]
+    #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
+    budget = Money(user_budget, 'USD')
+    budget = budget.currency + str(budget.amount)
 
-    # all_flights = {}
+    
+
+    access_key = os.environ["FLIGHTS_KEY1"]
+    destinations = ["ORD", "LAS"]
+
+    # initiating a list of destinations to display
     destinations_display = []
+
+    # Formatting payload according to API request format
     for destination in destinations:
         if destination != origin:
             payload = {
@@ -70,20 +76,15 @@ def make_request():
         # with open('response_'+destination+'.json', 'w') as outfile:
         #     json.dump(flights, outfile)
 
+
         # check to see if destination json is empty or not
-        # if not add destinations to a list
-        
+        # if not add destinations destinations_display
         if 'tripOption' in flights['trips']:
             destinations_display.append(destination)
+    
     # print destinations_display
     return destinations_display
 
-
-    # if len(destinations_display) == 0:
-    #     return "Sorry no flights matched your search criteria"
-    # else:
-    #     return destinations_display
-    # print destinations_display
 
 
         # massaging the json and getting values to display to the user
@@ -91,28 +92,53 @@ def make_request():
 
     #     trip_options = flights['trips']['tripOption']
     #     for trip in trip_options:
-    #         round_trip = []
-    #         for flight in trip['slice']:
-    #             flight_info = {}
-    #             flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
-    #             flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
-    #             flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
-    #             flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
-    #             flight_info['number'] = str(flight['segment'][0]['flight']['number'])
-    #             round_trip.append(flight_info)
-    #         flight_price = {}
-    #         flight_price['price'] = str(trip['saleTotal'])
-    #         round_trip.append(flight_price)
-    #         flight_results.append(round_trip)
+            # round_trip = []
+            # for flight in trip['slice']:
+            #     flight_info = {}
+            #     flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
+            #     flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
+            #     flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
+            #     flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
+            #     flight_info['number'] = str(flight['segment'][0]['flight']['number'])
+            #     round_trip.append(flight_info)
+            # flight_price = {}
+            # flight_price['price'] = str(trip['saleTotal'])
+            # round_trip.append(flight_price)
+            # flight_results.append(round_trip)
 
     #         # print flight_results
 
     #         # dict with keys as destination name and values as json for each 
     #     all_flights[destination] = flight_results
     #     # print all_flights.keys()
-    # return all_flights
+#     # return all_flights
 
-    
+# def show_flights(destination_json):
+#     """Shows flight details for a destination."""  
+
+#     #start with json for a destination based on the one clicked
+#     #massage json to get values to display to the user
+#     flight_results =[]
+
+#     trip_options = flights['trips']['tripOption']
+#     for trip in trip_options:
+#         round_trip = []
+#         for flight in trip['slice']:
+#             flight_info = {}
+#             flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
+#             flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
+#             flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
+#             flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
+#             flight_info['number'] = str(flight['segment'][0]['flight']['number'])
+#             round_trip.append(flight_info)
+#         flight_price = {}
+#         flight_price['price'] = str(trip['saleTotal'])
+#         round_trip.append(flight_price)
+#         flight_results.append(round_trip)
+
+        
+
+
 
 
 

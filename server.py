@@ -5,13 +5,12 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, User, Movie, Rating
+from model import connect_to_db, db
 import requests
 import json
 import os
 from money import Money
 from helper_functions import make_request
-
 
 
 app = Flask(__name__)
@@ -31,29 +30,29 @@ def index():
     return render_template("homepage.html")
 
 
-@app.route('/register', methods=['GET'])
-def register_form():
-    """Show form for user signup."""
+# @app.route('/register', methods=['GET'])
+# def register_form():
+#     """Show form for user signup."""
 
-    return render_template("register_form.html")
+#     return render_template("register_form.html")
 
 
-@app.route('/register', methods=['POST'])
-def register_process():
-    """Process registration."""
+# @app.route('/register', methods=['POST'])
+# def register_process():
+#     """Process registration."""
 
-    # Get form variables
-    first_name = request.form["first-name"]
-    last_name = request.form["last-name"]
-    email = request.form["email"]
-    password = request.form["password"]
-    new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
+#     # Get form variables
+#     first_name = request.form["first-name"]
+#     last_name = request.form["last-name"]
+#     email = request.form["email"]
+#     password = request.form["password"]
+#     new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
 
-    db.session.add(new_user)
-    db.session.commit()
+#     db.session.add(new_user)
+#     db.session.commit()
 
-    flash("User %s added." % email)
-    return redirect("/")
+#     flash("User %s added." % email)
+#     return redirect("/")
 
 
 @app.route('/destinations', methods=['GET'])

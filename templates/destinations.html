@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<h3>Places you can go to</h3>
+
 <div>
     {% if destinations|length == 0 %}
         Sorry no flights matched your search criteria
     {% elif destinations|length > 0 %}
         {% for dest in destinations %}
-            <div>{{ dest }}</div>
+            <div><a href="/flight_details/{{ dest }}">{{ dest }}</a></div>
         {% endfor %}
     {% endif %}
 </div>
