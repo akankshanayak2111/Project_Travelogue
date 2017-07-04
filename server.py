@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db
+from model import connect_to_db, db, User
 import requests
 import json
 import os
@@ -30,29 +30,29 @@ def index():
     return render_template("homepage.html")
 
 
-# @app.route('/register', methods=['GET'])
-# def register_form():
-#     """Show form for user signup."""
+@app.route('/register', methods=['GET'])
+def register_form():
+    """Show form for user signup."""
 
-#     return render_template("register_form.html")
+    return render_template("register_form.html")
 
 
-# @app.route('/register', methods=['POST'])
-# def register_process():
-#     """Process registration."""
+@app.route('/register', methods=['POST'])
+def register_process():
+    """Process registration."""
 
-#     # Get form variables
-#     first_name = request.form["first-name"]
-#     last_name = request.form["last-name"]
-#     email = request.form["email"]
-#     password = request.form["password"]
-#     new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
+    # Get form variables
+    first_name = request.form.get("first-name")
+    last_name = request.form.get("last-name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
 
-#     db.session.add(new_user)
-#     db.session.commit()
+    db.session.add(new_user)
+    db.session.commit()
 
-#     flash("User %s added." % email)
-#     return redirect("/")
+    flash("User %s added." % email)
+    return redirect("/")
 
 
 @app.route('/destinations', methods=['GET'])
@@ -78,35 +78,35 @@ def show_flights(dest):
 
 
 
-# @app.route('/login', methods=['GET'])
-# def login_form():
-#     """Show login form."""
+@app.route('/login', methods=['GET'])
+def login_form():
+    """Show login form."""
 
-#     return render_template("login_form.html")
+    return render_template("login_form.html")
 
 
-# @app.route('/login', methods=['POST'])
-# def login_process():
-#     """Process login."""
+@app.route('/login', methods=['POST'])
+def login_process():
+    """Process login."""
 
-#     # Get form variables
-#     email = request.form["email"]
-#     password = request.form["password"]
+    # Get form variables
+    email = request.form.get("email")
+    password = request.form.get("password")
 
-#     user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).first()
 
-#     if not user:
-#         flash("No such user")
-#         return redirect("/login")
+    if not user:
+        flash("No such user")
+        return redirect("/login")
 
-#     if user.password != password:
-#         flash("Incorrect password")
-#         return redirect("/login")
+    if user.password != password:
+        flash("Incorrect password")
+        return redirect("/login")
 
-#     session["user_id"] = user.user_id
+    session["user_id"] = user.user_id
 
-#     flash("Logged in")
-#     return redirect("/users/%s" % user.user_id)
+    flash("Logged in")
+    return redirect("/")
 
 
 # @app.route('/logout')
