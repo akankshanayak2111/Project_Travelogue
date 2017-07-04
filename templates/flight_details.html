@@ -1,25 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div>
 
-
-        <ul>
-            <li>
+        
+        <table>    
                 {% for each_fl in flight_results %}
-                    {% for item in each_fl %}
-                        {% for k, v in item.items() %}
+                  <tr>{% for item in each_fl %}
+                    {% for k, v in item.items() %}
 
-                          {{ k, v }} 
+                      <td>{{ k }}: {{ v }}</td>
 
-                        {% endfor %}
-                    {% endfor %}
+                    {% endfor %}</tr>
+                  {% endfor %}
                 {% endfor %}        
             
-            </li>
-        </ul>
+        </table> 
 
     
-</div>
+
 
 {% endblock %}

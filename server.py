@@ -71,7 +71,7 @@ def show_flights(dest):
 
     print flight_results
 
-    # for dest in flights_all_destinations.keys():
+    
 
     # flights_sorted = sorted(flights, key=lambda k: k['cost'])
     return render_template("flight_details.html", flight_results=flight_results)

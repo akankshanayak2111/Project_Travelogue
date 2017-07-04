@@ -28,6 +28,7 @@ def make_request():
     
 
     access_key = os.environ["FLIGHTS_KEY"]
+
     destinations = ["ORD", "LAS"]
 
     
@@ -69,6 +70,7 @@ def make_request():
         r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
         global flights
         flights = r.json()
+        print flights
 
         # dict with keys as destination name and values as json for each 
         all_flights[destination] = flights
@@ -76,12 +78,10 @@ def make_request():
     return all_flights
     
 
-        # to store json from each destination in a separate file
-        # with open('response_'+destination+'.json', 'w') as outfile:
-        #     json.dump(flights, outfile)
 
 def display_destinations():
     """Displays destinations based on user's search criteria."""
+    
 
     global flights_all_destinations
 
@@ -117,22 +117,21 @@ def get_flight_details(dest):
             round_trip = []
             for flight in trip['slice']:
                 flight_info = {}
-                flight_info['departure_time'] = str(flight['segment'][0]['leg'][0]['departureTime'])
-                flight_info['origin'] = str(flight['segment'][0]['leg'][0]['origin'])
-                flight_info['destination'] = str(flight['segment'][0]['leg'][0]['destination'])
-                flight_info['carrier'] = str(flight['segment'][0]['flight']['carrier'])
-                flight_info['number'] = str(flight['segment'][0]['flight']['number'])
+                flight_info['departure_time'] = flight['segment'][0]['leg'][0]['departureTime']
+                flight_info['origin'] = flight['segment'][0]['leg'][0]['origin']
+                flight_info['destination'] = flight['segment'][0]['leg'][0]['destination']
+                flight_info['carrier'] = flight['segment'][0]['flight']['carrier']
+                flight_info['number'] = flight['segment'][0]['flight']['number']
                 round_trip.append(flight_info)
             flight_price = {}
-            flight_price['price'] = str(trip['saleTotal'])
+            flight_price['price'] = trip['saleTotal']
             round_trip.append(flight_price)
             flight_results.append(round_trip)
 
     # print flight_results
     return flight_results
 
-    # print results_destinations.keys()
-    # return results_destinations
+    
 
 
 
