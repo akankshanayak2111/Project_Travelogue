@@ -21,6 +21,15 @@ def make_request():
     date_return = request.args.get("return-date")
     passenger = request.args.get("passengers")
 
+    #converting city to IATA code
+    request = {"request":
+                {"lang":"en","currency":"USD","time":5,"id":1499210157890,"server":"production","host":"iatacodes.org","pid":4867,
+                "key":{"id":144,"api_key":"YOUR-API-KEY","type":"demo","expired":"2015-01-17T01:15:31.000Z","registered":"2015-01-30T01:15:32.000Z",
+                "limits_by_hour":0,"limits_by_minute":0,"demo_methods":[],"usage_by_hour":159159,"usage_by_minute":173381},
+                "params":{"code":"CDG","lang":"en"},"version":6,"method":"airports",
+                "client":{"country_code":"US","country":"United States","city":"Cupertino","lat":37.323,"lng":-122.0322,"ip":"76.103.213.151",
+                "device":{"type":"desktop"},"agent":{"browser":"Chrome","version":"58.0.3029.110","os":"OS X","platform":"Apple Mac"}}}
+
     #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
     budget = Money(user_budget, 'USD')
     budget = budget.currency + str(budget.amount)
