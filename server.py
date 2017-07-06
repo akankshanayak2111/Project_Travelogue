@@ -18,9 +18,11 @@ app = Flask(__name__)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
-# Normally, if you use an undefined variable in Jinja2, it fails silently.
-# This is horrible. Fix this so that, instead, it raises an error.
+
 app.jinja_env.undefined = StrictUndefined
+
+
+
 
 
 @app.route('/')
@@ -28,6 +30,30 @@ def index():
     """Form that allows user to enter search criteria."""
 
     return render_template("homepage.html")
+
+
+
+@app.route('/destinations')
+def show_destinations():
+    """Returns the destinations based on user's search criteria."""
+
+    session['all_flights'] = make_request()
+    all_flights = session['all_flights']
+
+    destinations_display = display_destinations(all_flights)
+    return render_template("destinations.html", destinations=destinations_display)
+
+
+@app.route('/flight_details/<dest>')
+def show_flights(dest):
+    """Returns the flights for each destination."""
+
+    all_flights = session['all_flights']
+    
+    flight_results = get_flight_details(dest, all_flights)
+ 
+    # flights_sorted = sorted(flights, key=lambda k: k['cost'])
+    return render_template("flight_details.html", flight_results=flight_results)
 
 
 @app.route('/register', methods=['GET'])
@@ -46,35 +72,18 @@ def register_process():
     last_name = request.form.get("last-name")
     email = request.form.get("email")
     password = request.form.get("password")
-    new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
 
-    db.session.add(new_user)
-    db.session.commit()
+    if User.query.filter(User.email == email).first():
+        flash('Email already exists, please login.')
 
-    flash("User %s added." % email)
-    return redirect("/")
+    else:
+        user = User(first_name=first_name, last_name=last_name, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        flash('Successfully registered new user, please login.')
 
+    return redirect("/login")
 
-@app.route('/destinations', methods=['GET'])
-def show_destinations():
-    """Returns the destinations based on user's search criteria."""
-  
-    destinations_display = display_destinations()
-    return render_template("destinations.html", destinations=destinations_display)
-
-
-@app.route('/flight_details/<dest>') 
-def show_flights(dest):
-    """Returns the flights for each destination."""
-
-    flight_results = get_flight_details(dest)
-
-    print flight_results
-
-    
-
-    # flights_sorted = sorted(flights, key=lambda k: k['cost'])
-    return render_template("flight_details.html", flight_results=flight_results)
 
 
 
@@ -93,32 +102,36 @@ def login_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter(User.email == email).first()
 
-    if not user:
-        flash("No such user")
+    if user and user.password == password:
+        session['user'] = user.user_id
+        flash('Logged in')
+        return redirect("/users/{}".format(user.user_id))
+    else:
+        flash('Incorrect email/password')
         return redirect("/login")
 
-    if user.password != password:
-        flash("Incorrect password")
-        return redirect("/login")
 
-    session["user_id"] = user.user_id
+@app.route("/users/<int:user_id>")
+def user_detail(user_id):
+    """Show info about user."""
 
-    flash("Logged in")
-    return redirect("/")
+    user = User.query.get(user_id)
+    user_trips = user.trips
+
+    return render_template("user.html", user=user,
+                            user_trips=user_trips)
 
 
 @app.route('/logout')
 def logout():
     """Log out."""
 
-    del session["user_id"]
-    flash("Logged Out.")
+    session.pop('user')
+    flash('Logged out')
+
     return redirect("/")
-
-
-
 
 
 

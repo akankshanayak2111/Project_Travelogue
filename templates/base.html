@@ -7,24 +7,35 @@
 </head>
 <body>
 
-<h1>Travelogue</h1>
+    <h1>Travelogue</h1>
 
-<h3>Discover your next vacation!</h3>
+    <h3>Discover your next vacation!</h3>
 
-<!-- {% if "user_id" in session %}
+
+  {% if 'user' in session %}
     <a href="/logout">Logout</a>
-{% else %}
+  {% else %}
     <a href="/login">Login</a>
-{% endif %}
+  {% endif %}
 
-<hr>
 
-{% for flash in get_flashed_messages() %}
-  {{ flash }}
-{% endfor %} -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+
+  
+
+
+
 
 {% block content %}
-    Put your body here.
+    put your content here
 {% endblock %}
 
 </body>

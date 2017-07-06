@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h2>User {{ user.user_id }}</h2>
+  <a href="/">Look for destinations!</a>
+
+
+
+    <h2>Trips</h2>
+    <ul>
+    {% for trip in user_trips %}
+      <li>
+        {{ trip }}
+      </li>
+    {% endfor %}
+    </ul>
+  
+
+{% endblock %}
+
+
+
+  
+
+  

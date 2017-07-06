@@ -13,7 +13,7 @@ from pprint import pprint
 
 
 def make_request():
-    """Sends request to the API and adds destinations with non-empty response to a list."""
+    """Sends request to the API based on user's search criteria."""
 
     origin = request.args.get("origin")
     user_budget = request.args.get("budget")
@@ -21,14 +21,6 @@ def make_request():
     date_return = request.args.get("return-date")
     passenger = request.args.get("passengers")
 
-    #converting city to IATA code
-    request = {"request":
-                {"lang":"en","currency":"USD","time":5,"id":1499210157890,"server":"production","host":"iatacodes.org","pid":4867,
-                "key":{"id":144,"api_key":"YOUR-API-KEY","type":"demo","expired":"2015-01-17T01:15:31.000Z","registered":"2015-01-30T01:15:32.000Z",
-                "limits_by_hour":0,"limits_by_minute":0,"demo_methods":[],"usage_by_hour":159159,"usage_by_minute":173381},
-                "params":{"code":"CDG","lang":"en"},"version":6,"method":"airports",
-                "client":{"country_code":"US","country":"United States","city":"Cupertino","lat":37.323,"lng":-122.0322,"ip":"76.103.213.151",
-                "device":{"type":"desktop"},"agent":{"browser":"Chrome","version":"58.0.3029.110","os":"OS X","platform":"Apple Mac"}}}
 
     #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
     budget = Money(user_budget, 'USD')
@@ -36,7 +28,7 @@ def make_request():
 
     
 
-    access_key = os.environ["FLIGHTS_KEY"]
+    access_key = os.environ["FLIGHTS_KEY1"]
 
     destinations = ["ORD", "LAS"]
 
@@ -72,56 +64,50 @@ def make_request():
               }
             } 
 
-        url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key={}".format(access_key) 
-
-
-
-        r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})
-        global flights
+        url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key={}".format(access_key)       
+        r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})  
         flights = r.json()
-        print flights
+        # print flights
 
-        # dict with keys as destination name and values as json for each 
+        # dict with keys as destination name and values as json for each
         all_flights[destination] = flights
-    print all_flights.keys()
+    # print all_flights.keys()
     return all_flights
+ 
+
+
+def display_destinations(all_flights):
+    """Adds destinations with non-empty response to a list and displays those destinations."""
     
 
+    # global flights_all_destinations
 
-def display_destinations():
-    """Displays destinations based on user's search criteria."""
-    
-
-    global flights_all_destinations
-
-    flights_all_destinations = make_request()
+    # flights_all_destinations = make_request()
 
     # initiating a list of destinations to display
     destinations_display = []
 
         # check to see if destination json is empty or not
         # if not add destinations destinations_display
-    for dest, flights in flights_all_destinations.items():
-        if 'tripOption' in flights_all_destinations[dest]['trips']:
+    for dest, flights in all_flights.items():
+        if 'tripOption' in all_flights[dest]['trips']:
             destinations_display.append(dest)
     
-    print destinations_display
+    # print destinations_display
     return destinations_display
 
 
 
-def get_flight_details(dest):
+def get_flight_details(dest, all_flights):
     """Shows flight details for a destination."""  
-
-
 
     #start with json for a destination based on the one clicked
     #massage json to get values to display to the user
-    results_destinations = {}
+   
     flight_results =[]
 
-    if dest in flights_all_destinations:
-        trip_options = flights_all_destinations[dest]['trips']['tripOption']
+    if dest in all_flights:
+        trip_options = all_flights[dest]['trips']['tripOption']
         for trip in trip_options:
             round_trip = []
             for flight in trip['slice']:

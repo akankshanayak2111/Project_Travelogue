@@ -1,4 +1,4 @@
-"""Models and database functions for Ratings project."""
+"""Models and database functions for Travelogue."""
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -14,19 +14,19 @@ db = SQLAlchemy()
 # Model definitions
 
 class User(db.Model):
-    """User of ratings website."""
+    """User details for Travelogue."""
 
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    # first_name = db.Column(db.String(50), nullable=True)
-    # last_name = db.Column(db.String(50), nullable=True)
-    email = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db. Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    
 
 
     def __repr__(self):
@@ -34,6 +34,34 @@ class User(db.Model):
 
         return "<User user_id=%s email=%s>" % (self.user_id,
                                                self.email)
+
+
+class Trips(db.Model):
+    """Keeps a record of the user's searches and trips."""
+
+    __tablename__ = "trips"
+
+    trip_id = db.Column(db.Integer, 
+                        autoincrement=True, 
+                        primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    budget = db.Column(db.Integer,
+                        nullable=False)
+    origin_code = db.Column(db.String(3), nullable=False)
+    destination_code = db.Column(db.String(3), nullable=False)
+    date_started_at = db.Column(db.DateTime, nullable=False)
+    date_returned_at = db.Column(db.DateTime, nullable=False)
+
+    # Define relationship to user
+    user = db.relationship("User",
+                           backref=db.backref("trips",
+                                              order_by=trip_id))
+
+
+# class Cities(db.Model):
+#     """Cities and their IATA codes."""
+
+#     __tablename__ = "cities"
 
 
 
