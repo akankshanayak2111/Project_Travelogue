@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-
-        
-        <table>    
+ 
+        <table class="table table-hover table-bordered">    
                 {% for each_fl in flight_results %}
                   <tr>{% for item in each_fl %}
                     {% for k, v in item.items() %}
@@ -10,7 +9,11 @@
                       <td>{{ k }}: {{ v }}</td>
 
                     {% endfor %}</tr>
+                    
                   {% endfor %}
+                  <tr class="blank_row">
+                      <td colspan="3"></td>
+                    </tr>
                 {% endfor %}        
             
         </table> 

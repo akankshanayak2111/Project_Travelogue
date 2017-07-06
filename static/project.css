@@ -1,0 +1,18 @@
+.table td {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+.blank_row
+{
+    height: 50px !important;
+
+}
