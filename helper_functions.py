@@ -28,9 +28,10 @@ def make_request():
 
     
 
-    access_key = os.environ["FLIGHTS_KEY1"]
+    # access_key = os.environ["FLIGHTS_KEY2"]
+    access_key = os.environ["FLIGHTS_KEY2"]
 
-    destinations = ["ORD", "LAS"]
+    destinations = ["LAS"]
 
     
     all_flights = {}
@@ -67,7 +68,6 @@ def make_request():
         url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key={}".format(access_key)       
         r = requests.post(url, data=json.dumps(payload), headers={"Content-Type": "application/json"})  
         flights = r.json()
-        # print flights
 
         # dict with keys as destination name and values as json for each
         all_flights[destination] = flights
@@ -89,7 +89,7 @@ def display_destinations(all_flights):
 
         # check to see if destination json is empty or not
         # if not add destinations destinations_display
-    for dest, flights in all_flights.items():
+    for dest, flights in all_flights.iteritems():
         if 'tripOption' in all_flights[dest]['trips']:
             destinations_display.append(dest)
     

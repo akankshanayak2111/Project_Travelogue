@@ -36,23 +36,28 @@ def index():
 @app.route('/destinations')
 def show_destinations():
     """Returns the destinations based on user's search criteria."""
-
+    
+    if 'user' not in session:
+        session.clear()
     session['all_flights'] = make_request()
+    
     all_flights = session['all_flights']
-
+    
+    
     destinations_display = display_destinations(all_flights)
+    
     return render_template("destinations.html", destinations=destinations_display)
 
 
 @app.route('/flight_details/<dest>')
 def show_flights(dest):
     """Returns the flights for each destination."""
-
+    
     all_flights = session['all_flights']
+
     
     flight_results = get_flight_details(dest, all_flights)
- 
-    # flights_sorted = sorted(flights, key=lambda k: k['cost'])
+    
     return render_template("flight_details.html", flight_results=flight_results)
 
 
@@ -105,6 +110,7 @@ def login_process():
     user = User.query.filter(User.email == email).first()
 
     if user and user.password == password:
+        session.clear()
         session['user'] = user.user_id
         flash('Logged in')
         return redirect("/users/{}".format(user.user_id))
@@ -128,7 +134,7 @@ def user_detail(user_id):
 def logout():
     """Log out."""
 
-    session.pop('user')
+    session.clear()
     flash('Logged out')
 
     return redirect("/")
