@@ -51,6 +51,14 @@ $(document).ready(function() {
 // #     return redirect("https://www.kayak.com/flights/<origin>-<destination>/<start-date>/<return-date>")
 
 
+<form action="/book" method="POST">
+                        <input type="hidden" name="origin" value=" {{ item['origin'] }}">
+                        <input type="hidden" name="destination" value="{{ item['destination'] }}">
+                        <input type="hidden" name="start-date" value="{{ item['depature_time'] }}">
+
+                        </form>
+
+
 
 
 

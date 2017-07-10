@@ -55,10 +55,25 @@ def show_flights(dest):
     
     all_flights = session['all_flights']
 
-    
+    # import pdb
+    # pdb.set_trace()
     flight_results = get_flight_details(dest, all_flights)
     
     return render_template("flight_details.html", flight_results=flight_results)
+
+
+# @app.route('/book', methods=['POST'])
+# def book_flight():
+#     """Redirects user to kayak's booking portal."""
+    
+#     # import pdb
+#     # pdb.set_trace()
+#     origin = request.form.get['origin']
+#     destination = request.form.get['destination']
+#     start_date = request.form.get['start_date']
+#     url = origin + "-" + destination + "/" + "start_date"
+
+#     return redirect("https://www.kayak.com/flights/" + url)
 
 
 @app.route('/register', methods=['GET'])

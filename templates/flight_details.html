@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
  
-        <table class="table table-hover table-bordered">    
+        <table class="table table-hover table-bordered" id="table">    
                 {% for each_fl in flight_results %}
                   <tr>{% for item in each_fl %}
                     {% for k, v in item.items() %}
@@ -14,13 +14,19 @@
                   
 
                       {% endfor %}
-                      <tr><td><button class="btn" id="book">Book</button>
-                    
-                  </td></tr>
+                      
+                       
+                      
                   <tr class="blank_row">
                       <td colspan="3"></td>
                     </tr>
-                {% endfor %}        
+
+                    <tr><td><button  class="btn" id="book"><a href="https://www.kayak.com/flights/{{flight_results[0][0]['origin']}}-{{flight_results[0][0]['destination']}}/{{flight_results[0][0]['departure_time']}}">Book</a></button>
+                {% endfor %}     
+
+
+                    
+                        </td></tr>   
             
         </table> 
 
