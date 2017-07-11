@@ -9,6 +9,8 @@ import json
 import os
 from money import Money
 from pprint import pprint
+from datetime import datetime
+import time
 
 
 
@@ -66,11 +68,6 @@ def make_request(origin, budget, date_start, date_return, passenger):
 def display_destinations(all_flights):
     """Adds destinations with non-empty response to a list and displays those destinations."""
     
-
-    # global flights_all_destinations
-
-    # flights_all_destinations = make_request()
-
     # initiating a list of destinations to display
     destinations_display = []
 
