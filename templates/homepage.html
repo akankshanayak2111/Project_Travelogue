@@ -1,4 +1,14 @@
 {% extends 'base.html' %}
+{% block head %}
+<style type="text/css">
+#map {
+        height: 400px;
+        width: 100%;
+       }
+</style>
+
+{% endblock %}
+
 {% block content %}
 
 <form id="user-criteria" action="/destinations" method="GET">
@@ -45,6 +55,16 @@
 <p><a href="/login">Log In</a></p>
 
 
+<div id="map"></div>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh72lez6un3OHQ3sJ2EOLc1uFIEuDeeYc&callback=initMap">
+</script>
+
+<script
+src="/static/js/scripts.js">
+</script>
+
+    
 
 
 

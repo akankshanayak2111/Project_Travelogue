@@ -58,10 +58,7 @@ class Trips(db.Model):
                                               order_by=trip_id))
 
 
-# class Cities(db.Model):
-#     """Cities and their IATA codes."""
 
-#     __tablename__ = "cities"
 
 
 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% if user.trips %}
+    <ul>
+        {% for trip in user.trips %}
+        <li>
+            <div>Search number: {{ trip.trip_id}}</div>
+            <div>Origin: {{ trip.origin }}</div>
+            <div>Budget: {{ trip.budget }}</div>
+            <div>Start date: {{trip.date_started_at}}</div>
+            <div>Return date: {{trip.date_returned_at}}</div>
+            <div>Destinations: {{ trip.dest }}</div></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+
+{% endblock %}
+
+
