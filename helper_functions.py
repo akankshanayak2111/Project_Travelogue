@@ -12,21 +12,8 @@ from pprint import pprint
 
 
 
-def make_request():
+def make_request(origin, budget, date_start, date_return, passenger):
     """Sends request to the API based on user's search criteria."""
-
-    origin = request.args.get("origin")
-    user_budget = request.args.get("budget")
-    date_start = request.args.get("start-date")
-    date_return = request.args.get("return-date")
-    passenger = request.args.get("passengers")
-
-
-    #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
-    budget = Money(user_budget, 'USD')
-    budget = budget.currency + str(budget.amount)
-
-    
 
     # access_key = os.environ["FLIGHTS_KEY2"]
     access_key = os.environ["FLIGHTS_KEY2"]

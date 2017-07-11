@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, User
+from model import connect_to_db, db, User, Trips
 import requests
 import json
 import os
@@ -36,15 +36,40 @@ def index():
 @app.route('/destinations')
 def show_destinations():
     """Returns the destinations based on user's search criteria."""
+
+    origin = request.args.get("origin")
+    user_budget = request.args.get("budget")
+    date_start = request.args.get("start-date")
+    date_return = request.args.get("return-date")
+    passenger = request.args.get("passengers")
+
+
+    #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
+    budget = Money(user_budget, 'USD')
+    budget = budget.currency + str(budget.amount)
+
+
+
     
     if 'user' not in session:
         session.clear()
-    session['all_flights'] = make_request()
+    session['all_flights'] = make_request(origin, budget, date_start, date_return, passenger)
     
     all_flights = session['all_flights']
+
+
+    session['origin'] = origin
+    session['budget'] = user_budget
+    session['date_start'] = date_start
+    session['date_return'] = date_return
+    session['passenger'] = passenger
+    print session.keys()
     
     
-    destinations_display = display_destinations(all_flights)
+    # destinations_display = display_destinations(all_flights)
+    session['destinations_display'] = display_destinations(all_flights)
+    destinations_display = session['destinations_display']
+
     
     return render_template("destinations.html", destinations=destinations_display)
 
@@ -60,20 +85,6 @@ def show_flights(dest):
     flight_results = get_flight_details(dest, all_flights)
     
     return render_template("flight_details.html", flight_results=flight_results)
-
-
-# @app.route('/book', methods=['POST'])
-# def book_flight():
-#     """Redirects user to kayak's booking portal."""
-    
-#     # import pdb
-#     # pdb.set_trace()
-#     origin = request.form.get['origin']
-#     destination = request.form.get['destination']
-#     start_date = request.form.get['start_date']
-#     url = origin + "-" + destination + "/" + "start_date"
-
-#     return redirect("https://www.kayak.com/flights/" + url)
 
 
 @app.route('/register', methods=['GET'])
@@ -139,10 +150,36 @@ def user_detail(user_id):
     """Show info about user."""
 
     user = User.query.get(user_id)
-    user_trips = user.trips
+    # session['user'] = user
+    
+    # user_trips = user.trips
 
-    return render_template("user.html", user=user,
-                            user_trips=user_trips)
+    return render_template("user.html", user=user)
+
+
+@app.route('/trips')
+def show_searched_trips():
+    """Shows the user's searched trips."""
+
+    budget = session['budget']
+    origin = session['origin']
+    start_date = session['date_start']
+    return_date = session['date_return']
+    user_id = session['user']
+    dest = session['destinations_display']
+    user = User.query.get(user_id)
+    
+   
+
+
+    if user_id:
+        trip = Trips(user_id=user_id,budget=budget,origin=origin,dest=dest,date_started_at=start_date,date_returned_at=return_date)
+        print trip
+        db.session.add(trip)
+    db.session.commit()
+
+
+    return render_template("trips.html", trip=trip, user=user)
 
 
 @app.route('/logout')

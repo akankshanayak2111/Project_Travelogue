@@ -37,7 +37,7 @@ class User(db.Model):
 
 
 class Trips(db.Model):
-    """Keeps a record of the user's searches and trips."""
+    """Keeps a record of the user's searches."""
 
     __tablename__ = "trips"
 
@@ -47,8 +47,8 @@ class Trips(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     budget = db.Column(db.Integer,
                         nullable=False)
-    origin_code = db.Column(db.String(3), nullable=False)
-    destination_code = db.Column(db.String(3), nullable=False)
+    origin = db.Column(db.String(50), nullable=False)
+    dest = db.Column(db.String(50), nullable=False)
     date_started_at = db.Column(db.DateTime, nullable=False)
     date_returned_at = db.Column(db.DateTime, nullable=False)
 
