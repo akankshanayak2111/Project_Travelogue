@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
 {% block head %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/project.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+
 <style type="text/css">
 #map {
         height: 400px;
         width: 100%;
        }
 </style>
+
+
 
 {% endblock %}
 
@@ -60,14 +69,15 @@
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh72lez6un3OHQ3sJ2EOLc1uFIEuDeeYc&callback=initMap">
 </script>
 
+
+<div class="chart-origin">
+    <canvas id="donutChart"></canvas>
+    <div id="donutLegend" class="chart-legend"></div>
+  </div>
+
 <script
 src="/static/js/scripts.js">
 </script>
-
-    
-
-
-
 
 
 

@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 
 
@@ -16,6 +16,10 @@ function initMap() {
 
 
 
+// co_ord = {'Miami':[25,30]}
+
+// for item in des_dict:
+//     location.append([key,co_ord[key]])
 
 var locations = [['Washington DC', 38.907192, -77.036871],
                 ['Seattle', 47.60621, -122.332071],
@@ -33,7 +37,7 @@ var locations = [['Washington DC', 38.907192, -77.036871],
 
 function setMarkers(map) {
     var image = {
-    url: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png',
+    url: 'https://maps.gstatic.com/mapfiles/ms2/micons/plane.png',
     size: new google.maps.Size(20, 32),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(0, 32)
@@ -54,13 +58,64 @@ function setMarkers(map) {
   }
 }
 
+// doughnut chart
+
+
+// var data = {
+//                 "labels": [
+//                     "SFO",
+//                     "LAX",
+//                     "ORD",
+//                     "NYC",
+//                     "LAS",
+//                     "SEA"
+
+//                 ],
+//                 "datasets": [
+//                     {
+//                         "data": [298.0, 362.5, 250.0, 333.75, 325.0, 290],
+//                         // "backgroundColor": [
+//                         //     "#FF6384",
+//                         //     "#36A2EB",
+//                         //     "#F7464A",
+//                         //     "#46BFBD",
+//                         //     "#949FB1",
+//                         //     "#4D5360"
+//                         // ],
+//                         // "hoverBackgroundColor": [
+//                         //     "#FF6384",
+//                         //     "#36A2EB",
+//                         //     "#F7464A",
+//                         //     "#46BFBD",
+//                         //     "#949FB1",
+//                         //     "#4D5360"
+
+//                         // ]
+//                     }]
+//             };
 
 
 
+var options = { responsive: true };
+
+var ctx_donut = $("#donutChart").get(0).getContext("2d");
+
+$.get("/origin-budget.json", function (data) {
+    var myDonutChart = new Chart(ctx_donut, {
+                                            type: 'doughnut',
+                                            data: data,
+                                            options: options
+                                          });
+    $('#donutLegend').html(myDonutChart.generateLegend());
+});
 
 
 
-
+// var myDoughnutChart = new Chart(ctx, {
+//     type: 'doughnut',
+//     data: {{data}},
+//     options: options
+// });
 
 
 

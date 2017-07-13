@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, flash, redirect, session
+from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User, Trips
@@ -28,8 +28,76 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Form that allows user to enter search criteria."""
+    # origin_list = db.session.query(Trips.origin).all()
+    # origin = set(origin_list)
+    # origin_data = list(origin)
+    # budget_data = []
+    # for o in origin:
+    #     avg =   db.session.query(db.func.avg(Trips.budget)).filter(Trips.origin == o).first()
+    #     budget_data.append(avg)
+    # budget_data = set(budget_data)
+    # budget = list(budget_data)
+    # color = ["#4747d1", "#ff80aa", "#ff944d", "#70db70", "#36A2EB", "#FF6384", "#F7464A", "#46BFBD", "#949FB1", "#4D5360", "#80ffff"]
+    # data_dict = {
+    #             "labels": [
+    #                 o for o in origin_data
+    #             ],
+    #             "datasets": [
+    #                 {
+    #                     "data": [b for b in budget],
+    #                     "backgroundColor": [
+    #                         c for c in color
+    #                     ],
+    #                     "hoverBackgroundColor": [
+    #                         c for c in color
+    #                     ]
+    #                 }]
+    #         }
+    
+    # print data_dict
+
 
     return render_template("homepage.html")
+
+@app.route('/origin-budget.json')
+def melon_types_data():
+    """Return data about average budgets."""
+    origin_list = db.session.query(Trips.origin).all()
+    origin = set(origin_list)
+    origin_data = list(origin)
+    budget_data = []
+    for o in origin:
+        avg =   db.session.query(db.func.avg(Trips.budget)).filter(Trips.origin == o).first()
+        budget_data.append(avg)
+    budget_data = set(budget_data)
+    budget = list(budget_data)
+    budget_list = []
+    for val in budget:
+        for v in val:
+            t = int(v)
+            budget_list.append(t)
+    print budget_list
+
+    color = ["#4747d1", "#ff80aa", "#ff944d", "#70db70", "#36A2EB", "#FF6384", "#F7464A", "#46BFBD", "#949FB1", "#4D5360", "#80ffff"]
+    data_dict = {
+                "labels": [
+                    o for o in origin_data
+                ],
+                "datasets": [
+                    {
+                        "data": [b for b in budget_list],
+                        "backgroundColor": [
+                            c for c in color
+                        ],
+                        "hoverBackgroundColor": [
+                            c for c in color
+                        ]
+                    }]
+            }
+
+    
+
+    return jsonify(data_dict)
 
 
 

@@ -25,7 +25,7 @@ class User(db.Model):
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db. Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=True)
     
 
 
@@ -48,16 +48,14 @@ class Trips(db.Model):
     budget = db.Column(db.Integer,
                         nullable=False)
     origin = db.Column(db.String(50), nullable=False)
-    dest = db.Column(db.String(50), nullable=False)
-    date_started_at = db.Column(db.DateTime, nullable=False)
-    date_returned_at = db.Column(db.DateTime, nullable=False)
+    dest = db.Column(db.String(50), nullable=True)
+    date_started_at = db.Column(db.DateTime, nullable=True)
+    date_returned_at = db.Column(db.DateTime, nullable=True)
 
     # Define relationship to user
     user = db.relationship("User",
                            backref=db.backref("trips",
                                               order_by=trip_id))
-
-
 
 
 
