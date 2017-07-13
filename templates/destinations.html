@@ -1,4 +1,19 @@
 {% extends 'base.html' %}
+{% block head %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/project.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+<style type="text/css">
+#map1 {
+        height: 400px;
+        width: 100%;
+       }
+</style>
+{% endblock %}
 {% block content %}
 
 <h3>Places you can go to</h3>
@@ -13,11 +28,77 @@
     {% endif %}
 </div>
 
+<div>
+    {% if 'user' in session %}
+        <h4><a href="/trips">Trips</a></h4>   
+    {% endif %}
+</div>
 
 
+<div id="map1"></div>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh72lez6un3OHQ3sJ2EOLc1uFIEuDeeYc&callback=initSecondMap">
+</script>
 
-<h2><a href="/trips">Trips</a></h2>
+<script>
+var location_coordinates = {'Washington DC': [38.907192, -77.036871],
+                        'SEA': [47.60621, -122.332071],
+                        'San Diego': [32.715738, -117.161084],
+                        'LAS': [36.169941, -115.13983],
+                        'Portland': [45.523062, -122.676482],
+                        'New York City': [40.712784, -74.005941],
+                        'LAX': [34.052234, -118.243685],
+                        'ORD': [41.878114, -87.629798],
+                        'Boston': [42.360083, -71.05888],
+                        'Miami': [25.76168, -80.19179],
+                        'San Francisco': [37.77493, -122.419416]
+
+                        };
 
 
+var user_dest = {{ user_dest| safe}}
+
+
+locationsUser = []
+
+for (var i = 0; i < user_dest.length; i++) {
+    locationsUser.push([user_dest[i], location_coordinates[user_dest[i]][0], location_coordinates[user_dest[i]][1]]);  
+}
+
+function initSecondMap() {
+        var unitedStates = {lat: 39.8097343, lng: -98.5556199};
+        var map1 = new google.maps.Map(document.getElementById('map1'), {
+          zoom: 4,
+          center: unitedStates
+        });
+
+        setDestMarkers(map1);
+      }
+
+function setDestMarkers(map1) {
+    var image = {
+    url: 'https://maps.gstatic.com/mapfiles/ms2/micons/plane.png',
+    size: new google.maps.Size(20, 32),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(0, 32)
+  };
+  var shape = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: 'poly'
+  };
+  for (var i = 0; i < locationsUser.length; i++) {
+
+    var loc = locationsUser[i];
+    var marker = new google.maps.Marker({
+      position: {lat: loc[1], lng: loc[2]},
+      map: map1,
+      icon: image,
+      shape: shape,
+      title: loc[0],
+    });
+  }
+}
+
+</script>
 
 {% endblock %}

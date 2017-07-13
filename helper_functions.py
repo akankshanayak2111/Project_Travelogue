@@ -20,7 +20,7 @@ def make_request(origin, budget, date_start, date_return, passenger):
     # access_key = os.environ["FLIGHTS_KEY2"]
     access_key = os.environ["FLIGHTS_KEY2"]
 
-    destinations = ["LAS"]
+    destinations = ["LAS","LAX"]
 
     
     all_flights = {}

@@ -28,39 +28,12 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Form that allows user to enter search criteria."""
-    # origin_list = db.session.query(Trips.origin).all()
-    # origin = set(origin_list)
-    # origin_data = list(origin)
-    # budget_data = []
-    # for o in origin:
-    #     avg =   db.session.query(db.func.avg(Trips.budget)).filter(Trips.origin == o).first()
-    #     budget_data.append(avg)
-    # budget_data = set(budget_data)
-    # budget = list(budget_data)
-    # color = ["#4747d1", "#ff80aa", "#ff944d", "#70db70", "#36A2EB", "#FF6384", "#F7464A", "#46BFBD", "#949FB1", "#4D5360", "#80ffff"]
-    # data_dict = {
-    #             "labels": [
-    #                 o for o in origin_data
-    #             ],
-    #             "datasets": [
-    #                 {
-    #                     "data": [b for b in budget],
-    #                     "backgroundColor": [
-    #                         c for c in color
-    #                     ],
-    #                     "hoverBackgroundColor": [
-    #                         c for c in color
-    #                     ]
-    #                 }]
-    #         }
-    
-    # print data_dict
 
 
     return render_template("homepage.html")
 
 @app.route('/origin-budget.json')
-def melon_types_data():
+def origin_budget_data():
     """Return data about average budgets."""
     origin_list = db.session.query(Trips.origin).all()
     origin = set(origin_list)
@@ -76,7 +49,7 @@ def melon_types_data():
         for v in val:
             t = int(v)
             budget_list.append(t)
-    print budget_list
+    
 
     color = ["#4747d1", "#ff80aa", "#ff944d", "#70db70", "#36A2EB", "#FF6384", "#F7464A", "#46BFBD", "#949FB1", "#4D5360", "#80ffff"]
     data_dict = {
@@ -131,15 +104,18 @@ def show_destinations():
     session['date_start'] = date_start
     session['date_return'] = date_return
     session['passenger'] = passenger
-    print session.keys()
     
+
     
     # destinations_display = display_destinations(all_flights)
     session['destinations_display'] = display_destinations(all_flights)
     destinations_display = session['destinations_display']
+    user_dest = session['destinations_display']
+    # print destinations_display
 
     
-    return render_template("destinations.html", destinations=destinations_display)
+    return render_template("destinations.html", destinations=destinations_display, user_dest=json.dumps(user_dest))
+
 
 
 @app.route('/flight_details/<dest>')
@@ -148,9 +124,11 @@ def show_flights(dest):
     
     all_flights = session['all_flights']
 
+
     # import pdb
     # pdb.set_trace()
     flight_results = get_flight_details(dest, all_flights)
+    print flight_results
     
     return render_template("flight_details.html", flight_results=flight_results)
 
@@ -242,8 +220,9 @@ def show_searched_trips():
 
     if user_id:
         trip = Trips(user_id=user_id,budget=budget,origin=origin,dest=dest,date_started_at=start_date,date_returned_at=return_date)
-        print trip
+    
         db.session.add(trip)
+    
     db.session.commit()
 
 
