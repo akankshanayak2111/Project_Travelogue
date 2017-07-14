@@ -18,7 +18,7 @@ def make_request(origin, budget, date_start, date_return, passenger):
     """Sends request to the API based on user's search criteria."""
 
     # access_key = os.environ["FLIGHTS_KEY2"]
-    access_key = os.environ["FLIGHTS_KEY2"]
+    access_key = os.environ["FLIGHTS_KEY"]
 
     destinations = ["LAS","LAX"]
 
@@ -89,8 +89,9 @@ def get_flight_details(dest, all_flights):
     #massage json to get values to display to the user
    
     flight_results =[]
-
+    print all_flights[dest]
     if dest in all_flights:
+        print "####"
         trip_options = all_flights[dest]['trips']['tripOption']
         for trip in trip_options:
             round_trip = []

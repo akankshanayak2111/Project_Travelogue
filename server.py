@@ -94,9 +94,11 @@ def show_destinations():
     
     if 'user' not in session:
         session.clear()
-    session['all_flights'] = make_request(origin, budget, date_start, date_return, passenger)
+    global all_flights
+    all_flights = make_request(origin, budget, date_start, date_return, passenger)
+    # all_flights = session['all_flights']
     
-    all_flights = session['all_flights']
+    # all_flights = session['all_flights']
 
 
     session['origin'] = origin
@@ -106,9 +108,10 @@ def show_destinations():
     session['passenger'] = passenger
     
 
-    
+   
     # destinations_display = display_destinations(all_flights)
     session['destinations_display'] = display_destinations(all_flights)
+    
     destinations_display = session['destinations_display']
     user_dest = session['destinations_display']
     # print destinations_display
@@ -116,18 +119,20 @@ def show_destinations():
     
     return render_template("destinations.html", destinations=destinations_display, user_dest=json.dumps(user_dest))
 
-
-
 @app.route('/flight_details/<dest>')
 def show_flights(dest):
     """Returns the flights for each destination."""
+    # if 'user' not in session:
+    #     session.clear()
+    # all_flights = session['all_flights']
     
-    all_flights = session['all_flights']
+    # all_flights = session['all_flights']
+   
+    # print session['all_flights'].keys()
 
-
-    # import pdb
-    # pdb.set_trace()
+    
     flight_results = get_flight_details(dest, all_flights)
+
     print flight_results
     
     return render_template("flight_details.html", flight_results=flight_results)
