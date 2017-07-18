@@ -10,6 +10,7 @@ import requests
 import json
 import os
 from money import Money
+import decimal
 from helper_functions import make_request, display_destinations, get_flight_details
 
 
@@ -88,6 +89,7 @@ def show_destinations():
     #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
     budget = Money(user_budget, 'USD')
     budget = budget.currency + str(budget.amount)
+    
 
 
 

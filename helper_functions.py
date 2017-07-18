@@ -89,7 +89,7 @@ def get_flight_details(dest, all_flights):
     #massage json to get values to display to the user
    
     flight_results =[]
-    print all_flights[dest]
+    # print all_flights[dest]
     if dest in all_flights:
         print "####"
         trip_options = all_flights[dest]['trips']['tripOption']
