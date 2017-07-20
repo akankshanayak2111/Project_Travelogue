@@ -51,6 +51,7 @@ class Trips(db.Model):
     dest = db.Column(db.String(50), nullable=True)
     date_started_at = db.Column(db.DateTime, nullable=True)
     date_returned_at = db.Column(db.DateTime, nullable=True)
+    favorite = db.Column(db.Boolean, default=False, nullable=True)
 
     # Define relationship to user
     user = db.relationship("User",

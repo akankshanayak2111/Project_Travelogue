@@ -74,6 +74,27 @@ def origin_budget_data():
     return jsonify(data_dict)
 
 
+@app.route('/add-to-favorites.json', methods=['POST'])
+def trips_favorited_by_users():
+    """Return data about trips added to bucket list."""
+
+    trip_id = request.form.get("trip_id")
+    favorite = request.form.get("favorite")
+
+    trip = db.session.query(Trips).filter(Trips.trip_id == trip_id).first()
+
+    trip.favorite = favorite
+    db.session.commit()
+
+
+    response = {'trip_id': trip_id, 'favorite': favorite}
+
+    return jsonify(response)
+
+
+
+
+
 
 @app.route('/destinations')
 def show_destinations():
@@ -84,58 +105,36 @@ def show_destinations():
     date_start = request.args.get("start-date")
     date_return = request.args.get("return-date")
     passenger = request.args.get("passengers")
-
+    
 
     #Using Money python package to format the user_budget field in ISO-4217 format for sending API request
     budget = Money(user_budget, 'USD')
     budget = budget.currency + str(budget.amount)
-    
-
-
-
-    
+   
     if 'user' not in session:
         session.clear()
     global all_flights
     all_flights = make_request(origin, budget, date_start, date_return, passenger)
-    # all_flights = session['all_flights']
-    
-    # all_flights = session['all_flights']
-
 
     session['origin'] = origin
     session['budget'] = user_budget
     session['date_start'] = date_start
     session['date_return'] = date_return
     session['passenger'] = passenger
-    
 
-   
-    # destinations_display = display_destinations(all_flights)
     session['destinations_display'] = display_destinations(all_flights)
     
     destinations_display = session['destinations_display']
     user_dest = session['destinations_display']
-    # print destinations_display
-
-    
+   
     return render_template("destinations.html", destinations=destinations_display, user_dest=json.dumps(user_dest))
+
 
 @app.route('/flight_details/<dest>')
 def show_flights(dest):
     """Returns the flights for each destination."""
-    # if 'user' not in session:
-    #     session.clear()
-    # all_flights = session['all_flights']
-    
-    # all_flights = session['all_flights']
-   
-    # print session['all_flights'].keys()
-
     
     flight_results = get_flight_details(dest, all_flights)
-
-    print flight_results
     
     return render_template("flight_details.html", flight_results=flight_results)
 
@@ -187,7 +186,8 @@ def login_process():
     password = request.form.get("password")
 
     user = User.query.filter(User.email == email).first()
-
+    print user
+    
     if user and user.password == password:
         session.clear()
         session['user'] = user.user_id
@@ -221,9 +221,8 @@ def show_searched_trips():
     user_id = session['user']
     dest = session['destinations_display']
     user = User.query.get(user_id)
-    
-   
 
+    
 
     if user_id:
         trip = Trips(user_id=user_id,budget=budget,origin=origin,dest=dest,date_started_at=start_date,date_returned_at=return_date)
@@ -254,7 +253,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 

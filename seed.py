@@ -34,7 +34,7 @@ def load_trips():
     print "Trips"
 
     for row in open("seed_data/u.trips"):
-        row = row.rstrip(
+        row = row.rstrip()
 
         trip_id, user_id, budget, origin = row.split("|")
         
@@ -57,5 +57,5 @@ if __name__ == "__main__":
 
     load_users()
     load_trips()
-    set_val_user_id()
+    # set_val_user_id()
 

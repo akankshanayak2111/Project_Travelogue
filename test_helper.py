@@ -1,32 +1,10 @@
 from helper_functions import make_request, display_destinations, get_flight_details
-from unittest import TestCase
-from model import connect_to_db, db
-from server import app
-from flask import session
-# from mocker import Mocker, MockerTestCase
-# import mock
-import server
+import unittest
 import json
 
-class MockFlaskTests(TestCase):
-    """Flask tests for mocking."""
-    def setUp(self):
-        """Stuff to do before every test."""
 
-        # Get the Flask test client
-        self.client = app.test_client()
-
-        # Show Flask errors that happen during tests
-        app.config['TESTING'] = True
-
-        # Connect to test database
-        connect_to_db(app)
-        db.create_all()
-
-
-        # Making a mock request
-        
-        def mock_make_request(origin, budget, date_start, date_return, passenger):
+# Making a mock request
+def mock_make_request(origin, budget, date_start, date_return, passenger):
             """makes a mock request"""
             
             all_flights_details = {}
@@ -36,7 +14,9 @@ class MockFlaskTests(TestCase):
             return all_flights_details
 
 
-        server.make_request = mock_make_request
+
+class MyAppUnitTestCase(unittest.TestCase):
+    """Unit tests for testing helper functions."""
 
     def test_display_destinations(self):
         """Checks if the destinations list has the correct values."""
@@ -47,7 +27,7 @@ class MockFlaskTests(TestCase):
         date_return = "2017-08-25"
         passenger = "1"
 
-        all_flights_details = server.make_request(origin=origin, budget=budget, date_start=date_start, date_return=date_return, passenger=passenger)
+        all_flights_details = mock_make_request(origin=origin, budget=budget, date_start=date_start, date_return=date_return, passenger=passenger)
         self.assertEqual(display_destinations(all_flights_details), ["LAS"])
 
 
@@ -59,17 +39,17 @@ class MockFlaskTests(TestCase):
         date_return = "2017-08-25"
         passenger = "1"
 
-        all_flights_details = server.make_request(origin=origin, budget=budget, date_start=date_start, date_return=date_return, passenger=passenger)
+        all_flights_details = mock_make_request(origin=origin, budget=budget, date_start=date_start, date_return=date_return, passenger=passenger)
 
         dest = "LAS"
         flight_results = []
         flight_results = [[{'carrier': u'UA',
-                            'departure_time': u'2017-08-21T22:14-07:00',
+                            'departure_time': '2017-08-21 22:14',
                             'destination': u'LAS',
                             'number': u'455',
                             'origin': u'SFO'},
                             {'carrier': u'UA',
-                            'departure_time': u'2017-08-25T05:30-07:00',
+                            'departure_time': '2017-08-25 05:30',
                             'destination': u'SFO',
                             'number': u'1098',
                             'origin': u'LAS'},
@@ -77,65 +57,6 @@ class MockFlaskTests(TestCase):
 
         self.assertEqual(get_flight_details(dest, all_flights_details), flight_results)
         
-
-    
-
-
-
-
-       
-    
-
-
-
-            
-
-
-    # def test_destinations_with_mock(self):
-    #     """Find destinations based on values returned from json."""
-
-    #     result = self.client.get('/destinations')
-    #     self.assertIn("LAS", result.data)
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    # def test_make_request(self):
-    #     self.assertEqual(helper_functions.make_request(2, 2), 4)
-
-# def test():
-#     mock.http_request.return ("inputjson")
-#     assert get_destination == "akanksha", "function is not working properly"
-
-# def get_name():
-
-#     return "akanks"
-
-# test()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

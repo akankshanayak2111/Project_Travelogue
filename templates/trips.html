@@ -1,4 +1,27 @@
 {% extends 'base.html' %}
+{% block head %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/project.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    /*.favorite-removed{
+        background-color: #808080;
+    }*/
+
+    .btn.favorite.favorite-removed{
+        
+        color: red;
+    }
+
+    
+    
+    </style>
+
+{% endblock %}
 {% block content %}
 
     {% if user.trips %}
@@ -11,11 +34,26 @@
             <div>Start date: {{trip.date_started_at}}</div>
             <div>Return date: {{trip.date_returned_at}}</div>
             <div>Destinations: {{ trip.dest }}</div></li>
+
+            {% if trip.favorite == False %}
+            <div>
+                <button><a id="button" class = "btn favorite-removed" data-tripid="{{trip.trip_id}}" data-favorite="No">Favorite!<span class="glyphicon glyphicon-heart"></a></button>
+            </div>
+            {% else %}
+            <div>
+            <button><a id="button" class = "btn favorite favorite-removed" data-tripid="{{trip.trip_id}}" data-favorite="Yes">Favorite!<span class="glyphicon glyphicon-heart"></span></a></button>
+            </div>
+            {% endif %}
+            <br>
         {% endfor %}
     </ul>
     {% endif %}
+
+    <script src="/static/js/favorites.js"></script>
     
 
 {% endblock %}
+
+
 
 

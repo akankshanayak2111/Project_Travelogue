@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
+{% block head %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/project.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+
+{% endblock %}
 {% block content %}
  
         <table class="table table-hover table-bordered" id="table">    
@@ -14,14 +25,13 @@
                   
 
                       {% endfor %}
-                      
-                       
-                      
-                  <tr class="blank_row">
-                      <td colspan="3"></td>
-                    </tr>
+  
 
-                    <tr><td><button  class="btn" id="book"><a href="https://www.kayak.com/flights/{{flight_results[0][0]['origin']}}-{{flight_results[0][0]['destination']}}/{{flight_results[0][0]['departure_time']}}/{{flight_results[0][1]['departure_time']}}">Book</a></button>
+                    <tr><td><button  class="btn" id="book"><a href="https://www.kayak.com/flights/{{flight_results[0][0]['origin']}}-{{flight_results[0][0]['destination']}}/{{flight_results[0][0]['departure_time'][:10]}}/{{flight_results[0][1]['departure_time'][:10]}}">Book</a></button>
+
+                      <tr class="blank_row">
+                      <td colspan="12"></td>
+                    </tr>
                 {% endfor %}     
 
 

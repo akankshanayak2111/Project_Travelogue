@@ -91,13 +91,17 @@ def get_flight_details(dest, all_flights):
     flight_results =[]
     # print all_flights[dest]
     if dest in all_flights:
-        print "####"
         trip_options = all_flights[dest]['trips']['tripOption']
         for trip in trip_options:
             round_trip = []
             for flight in trip['slice']:
                 flight_info = {}
-                flight_info['departure_time'] = flight['segment'][0]['leg'][0]['departureTime']
+                
+                dep_time = flight['segment'][0]['leg'][0]['departureTime']
+                time_departure = datetime.strptime(dep_time[:16], '%Y-%m-%dT%H:%M')
+                final_time = time_departure.strftime("%Y-%m-%d %H:%M")
+
+                flight_info['departure_time'] = final_time
                 flight_info['origin'] = flight['segment'][0]['leg'][0]['origin']
                 flight_info['destination'] = flight['segment'][0]['leg'][0]['destination']
                 flight_info['carrier'] = flight['segment'][0]['flight']['carrier']
