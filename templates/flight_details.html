@@ -11,7 +11,8 @@
 
 {% endblock %}
 {% block content %}
- 
+    <div class="container">
+      <div class="row col-xs-12">
         <table class="table table-hover table-bordered" id="table">    
                 {% for each_fl in flight_results %}
                   <tr>{% for item in each_fl %}
@@ -39,6 +40,8 @@
                         </td></tr>   
             
         </table> 
+        </div>
+        </div>
 
     
 

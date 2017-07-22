@@ -12,6 +12,15 @@
         height: 400px;
         width: 100%;
        }
+
+
+.0-legend div{
+    list-style-type: none;
+}
+
+.text-center{
+  text-align: center;
+}
 </style>
 
 
@@ -19,7 +28,10 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="container">
+<div class="row">
+<div class="col-xs-6"> 
+  
 <form id="user-criteria" action="/destinations" method="GET">
 
   <div>
@@ -59,20 +71,39 @@
   </div>
 
 </form>
+</div>
 
 
+<div class="chart-origin col-xs-6" >
+    <canvas id="donutChart"></canvas>
+  </div>
+    <!-- <div id="donutLegend" class="chart-legend"></div> -->
+  <div class="col-xs-5">
+    <h4 class="pull-right">Average budgets for users based on origin city</h4>
+  </div>
 
+
+</div>
+</div>
+
+<div class="container">
+
+<div class="row text-center">
 <h3>Popular destinations within the United States</h3>
-<div id="map"></div>
+</div>
+<div class="row text-center">
+  <div id="map" class="col-xs-12"></div> 
+</div>
+
+</div>
+
+
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh72lez6un3OHQ3sJ2EOLc1uFIEuDeeYc&callback=initMap">
 </script>
 
 
-<div class="chart-origin">
-    <canvas id="donutChart"></canvas>
-    <div id="donutLegend" class="chart-legend"></div>
-  </div>
+
 
 <script
 src="/static/js/scripts.js">

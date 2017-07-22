@@ -6,19 +6,57 @@
 
     {% endblock %}
 </head>
+<style type="text/css">
+
+  nav{
+    z-index: 500;
+}
+
+.navbar{
+
+  margin-bottom: 0;
+  border: 0;
+  border-radius: 0;
+  border-color: #737477;
+}
+
+.navbar.second{
+  margin-bottom: 30px;
+  border-top-color: black;
+  background-color: #404040;
+}
+
+
+</style>
+
 <body>
 
-    <h1>Travelogue</h1>
+  <nav class="navbar navbar-inverse navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><h4>Travelogue</h4></a>
+      <a class="navbar-brand" href="#"><h5>Discover your next vacation!</h5></a>
+      
+    </div>
+  </div>
+</nav>
 
-    <h3>Discover your next vacation!</h3>
-
-
-  {% if 'user' in session %}
-    <a href="/logout">Logout</a>
-  {% else %}
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
+<nav class="navbar navbar-inverse navbar-default second">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      {% if 'user' in session %}
+      <li><a href="/logout">Logout</a></li>
+      {% else %}
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
   {% endif %}
+      
+    </ul>
+  </div>
+</nav>
+
+
 
 
   {% with messages = get_flashed_messages() %}

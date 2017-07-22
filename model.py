@@ -58,21 +58,46 @@ class Trips(db.Model):
                            backref=db.backref("trips",
                                               order_by=trip_id))
 
+def example_data():
+    """Create some sample data."""
 
+    
+    User.query.delete()
+    Trips.query.delete()
+
+    # added sample users and trips           
+   
+    pat = User(first_name="pat", last_name="simons", email="pat@simons.com", password="pat")
+    ria = User(first_name="ria", last_name="n", email="ria@n.com", password="ria")
+    sara = User(first_name="sara", last_name="t", email="sara@t.com", password="sara")
+
+    trip_1 = Trips(user_id=1, origin="SFO")
+    trip_2 = Trips(user_id=2, origin="SFO")
+    trip_3 = Trips(user_id=1, origin="SFO")
+
+    db.session.add_all([pat, ria, sara])
+    db.session.commit()
+
+
+def connect_to_db(app, db_uri="postgresql:///flights"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.app = app
+    db.init_app(app)
 
 
 
 #####################################################################
 # Helper functions
 
-def connect_to_db(app):
-    """Connect the database to our Flask app."""
+# def connect_to_db(app):
+#     """Connect the database to our Flask app."""
 
-    # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///flights'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.app = app
-    db.init_app(app)
+#     # Configure to use our PostgreSQL database
+#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///flights'
+#     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#     db.app = app
+#     db.init_app(app)
 
 
 if __name__ == "__main__":

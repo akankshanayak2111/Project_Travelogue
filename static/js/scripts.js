@@ -1,4 +1,4 @@
-"use strict";
+
 
 
 
@@ -8,7 +8,9 @@ function initMap() {
         var unitedStates = {lat: 39.8097343, lng: -98.5556199};
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
-          center: unitedStates
+          center: unitedStates,
+          scrollwheel: false,
+          disableDoubleClickZoom: true,
         });
 
         setMarkers(map);
@@ -55,7 +57,6 @@ function setMarkers(map) {
   }
 }
 
-// setting up map with specific markers 
 
 
 
