@@ -37,7 +37,7 @@ var locations = [['Washington DC', 38.907192, -77.036871],
 function setMarkers(map) {
     var image = {
     url: 'https://maps.gstatic.com/mapfiles/ms2/micons/plane.png',
-    size: new google.maps.Size(20, 32),
+    size: new google.maps.Size(40, 40),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(0, 32)
   };
@@ -66,7 +66,10 @@ function setMarkers(map) {
 
 // doughnut chart
 
-var options = { responsive: true };
+var options = { responsive: true, legend: {display: true, position: 'bottom',}, 
+                
+            tooltips: {enabled: true,} }
+
 
 var ctx_donut = $("#donutChart").get(0).getContext("2d");
 

@@ -7,6 +7,7 @@
     
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <style type="text/css">
     /*.favorite-removed{
         background-color: #808080;
@@ -17,23 +18,38 @@
         color: red;
     }
 
-    
+    .trip-search{
+        border-width: 2px;
+        border-style: solid;
+        border-color: white;
+        padding: 5px;
+        
+
+    }
+    .trip-search{
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+    }
     
     </style>
 
 {% endblock %}
 {% block content %}
-
+    <div class="container">
+    <div class="row">
+    <div class="col-xs-6"> 
     {% if user.trips %}
-    <ul>
+
+
+    <div>
         {% for trip in user.trips %}
-        <li>
-            <div>Search number: {{ trip.trip_id}}</div>
+        <div class="trip-search">
+            <!-- <div>Search number: {{ trip.trip_id}}</div> -->
             <div>Origin: {{ trip.origin }}</div>
             <div>Budget: {{ trip.budget }}</div>
             <div>Start date: {{trip.date_started_at}}</div>
             <div>Return date: {{trip.date_returned_at}}</div>
-            <div>Destinations: {{ trip.dest }}</div></li>
+            <div>Destinations: {{ trip.dest }}</div></div>
 
             {% if trip.favorite == False %}
             <div>
@@ -46,8 +62,11 @@
             {% endif %}
             <br>
         {% endfor %}
-    </ul>
+    </div>
     {% endif %}
+</div>
+</div>
+</div>
 
     <script src="/static/js/favorites.js"></script>
     

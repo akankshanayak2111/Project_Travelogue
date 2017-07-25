@@ -101,6 +101,7 @@ def show_destinations():
     """Returns the destinations based on user's search criteria."""
 
     origin = request.args.get("origin")
+    origin = "SFO"
     user_budget = request.args.get("budget")
     date_start = request.args.get("start-date")
     date_return = request.args.get("return-date")

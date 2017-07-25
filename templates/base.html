@@ -26,15 +26,27 @@
   background-color: #404040;
 }
 
+.bg {
+  size: 100px;
+}
+
+.bg{
+  background: url(/static/images/nebo_vysota_oblaka_samolet_krylo_polet_parenie_48093_1600x900.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
 
 </style>
 
 <body>
+  <div class="bg">
 
   <nav class="navbar navbar-inverse navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#"><h4>Travelogue</h4></a>
+      <a class="navbar-brand" href="#"><h4 id="travel">Travelogue</h4></a>
       <a class="navbar-brand" href="#"><h5>Discover your next vacation!</h5></a>
       
     </div>
@@ -43,13 +55,17 @@
 
 <nav class="navbar navbar-inverse navbar-default second">
   <div class="container-fluid">
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" id="navigation">
       <li class="active"><a href="#">Home</a></li>
       {% if 'user' in session %}
       <li><a href="/logout">Logout</a></li>
+      <li><a href="/trips">Trips</a></li>
       {% else %}
       <li><a href="/login">Login</a></li>
       <li><a href="/register">Register</a></li>
+
+
+      
   {% endif %}
       
     </ul>
@@ -77,6 +93,6 @@
 {% block content %}
     put your content here
 {% endblock %}
-
+</div>
 </body>
 </html>

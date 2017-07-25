@@ -11,41 +11,105 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 <style type="text/css">
 #map1 {
         height: 400px;
         width: 100%;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
        }
 
 .col-xs-4.pull-right{
   
   margin-bottom: 50px;
 }
+
+.sidenav { 
+    float: left;
+    padding-top: 0px; 
+    margin-top: 0;
+    border: 0;
+    background-color: black;
+    height: 100%;
+    width: 10%;
+    
+   
+}
+
+.navbar.second{
+  margin-bottom: 0px;
+}
+
+.destinations{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  text-decoration: underline;
+  font-weight: bold;
+  color: #0F1C33;
+
+}
+
+/*.blur {
+  background: url(/static/images/nebo_vysota_oblaka_samolet_krylo_polet_parenie_48093_1600x900.jpg) no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  filter: blur(13px);
+  position: absolute;
+  height: 300px;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+  margin-bottom: 80px;
+}
+.center {
+  position: relative;
+
+  
+}
+
+.widget {
+  border-top: 2px solid rgba(255, 255, 255, .5);
+  border-bottom: 2px solid rgba(255, 255, 255, .5);
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}*/
+
+.carousel {
+  width:320px;
+  height:120px;
+  margin-bottom: 80px;
+}
+
+
+
+
+
 </style>
 {% endblock %}
 {% block content %}
+    
 
   <div class="container">
   <div class="row">
   <div class="col-xs-4"> 
-
-
-    <div>
-      {% if 'user' in session %}
-        <h4><a href="/trips">Trips</a></h4>   
-      {% endif %}
-    </div>
-
+    
+    <div class="widget">
+    <div class="blur"></div>
+    <div class="text center">
     <h3>Places you can go to</h3>
-
-    <div>
     {% if destinations|length == 0 %}
         Sorry no flights matched your search criteria
     {% elif destinations|length > 0 %}
         {% for dest in destinations %}
-            <div><a id ="{{ dest }}" href="/flight_details/{{ dest }}">{{ dest }}</a></div>
+            
+              <div><br><a id ="{{ dest }}" class="destinations" href="/flight_details/{{ dest }}">{{ dest }}</a></div>
         {% endfor %}
     {% endif %}
+    </div>
     </div>
 
 </div> <!-- for col-xs-4 -->
@@ -62,15 +126,15 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <img src="http://rasubegasuryokou.com/img/lasvegas.jpg" alt="Las Vegas" style="width:100%;">
+        <img src="/static/images/LAS.jpg" alt="Las Vegas" style="width:100%;">
       </div>
 
       <div class="item">
-        <img src="http://cdn.lightgalleries.net/4bd5ec0f44d0a/images/new_things072-2.jpg" alt="Los Angeles" style="width:100%;">
+        <img src="static/images/NYC.jpg" alt="New York City" style="width:100%;">
       </div>
     
       <div class="item">
-        <img src="http://img13.deviantart.net/a71a/i/2011/290/6/d/chicago_sign_by_eh_design-d4d6gqj.jpg" alt="Chicago" style="width:100%;">
+        <img src="/static/images/ORD.jpg" alt="Chicago" style="width:100%;">
       </div>
     </div>
 
@@ -108,12 +172,12 @@ var location_coordinates = {'Washington DC': [38.907192, -77.036871],
                         'San Diego': [32.715738, -117.161084],
                         'LAS': [36.169941, -115.13983],
                         'Portland': [45.523062, -122.676482],
-                        'New York City': [40.712784, -74.005941],
+                        'JFK': [40.712784, -74.005941],
                         'LAX': [34.052234, -118.243685],
                         'ORD': [41.878114, -87.629798],
-                        'Boston': [42.360083, -71.05888],
-                        'Miami': [25.76168, -80.19179],
-                        'San Francisco': [37.77493, -122.419416]
+                        'BOS': [42.360083, -71.05888],
+                        'MIA': [25.76168, -80.19179],
+                        'SFO': [37.77493, -122.419416]
 
                         };
 
@@ -142,7 +206,7 @@ function initSecondMap() {
 function setDestMarkers(map1) {
     var image = {
     url: 'https://maps.gstatic.com/mapfiles/ms2/micons/plane.png',
-    size: new google.maps.Size(20, 32),
+    size: new google.maps.Size(40, 40),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(0, 32)
   };

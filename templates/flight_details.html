@@ -7,37 +7,56 @@
     
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <style type="text/css">
+
+    table, tr, td{
+      border: 1px solid gray;
+      background-color: transparent;
+    }
+    .blank{
+      border-collapse: collapse;
+      border-right: 0;
+      border-left: 0;
+    }
+
+    .flight-details{
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+    }
+    .btn{
+      background-color: #B6BDD1;
+    }
+    </style>
 
 {% endblock %}
 {% block content %}
     <div class="container">
       <div class="row col-xs-12">
-        <table class="table table-hover table-bordered" id="table">    
+        <table class="table table-hover table-bordered" id="table"> 
+                
                 {% for each_fl in flight_results %}
-                  <tr>{% for item in each_fl %}
-                    {% for k, v in item.items() %}
+                  {% for item in each_fl %}
 
-                      <td>{{ k }}: {{ v }}</td>
+                    <tr>{% for k, v in item.items() %}  
+                   
+                        <td class="flight-details">{{k }} : {{ v }}</td>
 
                     {% endfor %}</tr>
 
-                    
-                  
-
                       {% endfor %}
   
-
-                    <tr><td><button  class="btn" id="book"><a href="https://www.kayak.com/flights/{{flight_results[0][0]['origin']}}-{{flight_results[0][0]['destination']}}/{{flight_results[0][0]['departure_time'][:10]}}/{{flight_results[0][1]['departure_time'][:10]}}">Book</a></button>
-
-                      <tr class="blank_row">
-                      <td colspan="12"></td>
+                    
+                    <tr><td><button  class="btn" id="book"><a href="https://www.kayak.com/flights/{{flight_results[0][0]['Origin']}}-{{flight_results[0][0]['Destination']}}/{{flight_results[0][0]['Departure Time'][:10]}}/{{flight_results[0][1]['Departure Time'][:10]}}">Book</a></button>
+                      </td></tr>   
+                      <tr class="blank_row no-border">
+                      <td class="blank" colspan="12"></td>
                     </tr>
                 {% endfor %}     
 
 
                     
-                        </td></tr>   
+                        
             
         </table> 
         </div>

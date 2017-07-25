@@ -18,9 +18,9 @@ def make_request(origin, budget, date_start, date_return, passenger):
     """Sends request to the API based on user's search criteria."""
 
     # access_key = os.environ["FLIGHTS_KEY2"]
-    access_key = os.environ["FLIGHTS_KEY2"]
+    access_key = os.environ["FLIGHTS_KEY7"]
 
-    destinations = ["LAS","LAX"]
+    destinations = ["LAS","LAX","ORD","JFK","MIA","BOS"]
 
     
     all_flights = {}
@@ -101,14 +101,14 @@ def get_flight_details(dest, all_flights):
                 time_departure = datetime.strptime(dep_time[:16], '%Y-%m-%dT%H:%M')
                 final_time = time_departure.strftime("%Y-%m-%d %H:%M")
 
-                flight_info['departure_time'] = final_time
-                flight_info['origin'] = flight['segment'][0]['leg'][0]['origin']
-                flight_info['destination'] = flight['segment'][0]['leg'][0]['destination']
-                flight_info['carrier'] = flight['segment'][0]['flight']['carrier']
-                flight_info['number'] = flight['segment'][0]['flight']['number']
+                flight_info['Departure Time'] = final_time
+                flight_info['Origin'] = flight['segment'][0]['leg'][0]['origin']
+                flight_info['Destination'] = flight['segment'][0]['leg'][0]['destination']
+                flight_info['Carrier'] = flight['segment'][0]['flight']['carrier']
+                flight_info['Flight Number'] = flight['segment'][0]['flight']['number']
                 round_trip.append(flight_info)
             flight_price = {}
-            flight_price['price'] = trip['saleTotal']
+            flight_price['Price'] = trip['saleTotal']
             round_trip.append(flight_price)
             flight_results.append(round_trip)
 
