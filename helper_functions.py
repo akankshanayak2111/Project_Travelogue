@@ -18,7 +18,7 @@ def make_request(origin, budget, date_start, date_return, passenger):
     """Sends request to the API based on user's search criteria."""
 
     # access_key = os.environ["FLIGHTS_KEY2"]
-    access_key = os.environ["FLIGHTS_KEY7"]
+    access_key = os.environ["FLIGHTS_KEY"]
 
     destinations = ["LAS","LAX","ORD","JFK","MIA","BOS"]
 
