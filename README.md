@@ -23,7 +23,7 @@ Travelogue runs through the server.py file on http://localhost:5000/
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+
 
 
 
