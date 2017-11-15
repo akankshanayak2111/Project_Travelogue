@@ -14,20 +14,58 @@ searches.
 Python (Backend), Flask, Jinja, SQL (Postgres), SQLAlchemy, CSS, Javascript, JQuery, Bootstrap, HTML5
 
 
-## Getting Started
+## Installation
 
-Travelogue requires a requirements.txt file installation. To use Travelogue, you will also need a 
-Google QPX API key from https://developers.google.com/qpx-express/v1/how-tos/authorizing
+
 Travelogue runs through the server.py file on http://localhost:5000/
 
+Download files from Github
 
-### Prerequisites
+Create and activate a virtual environment:
+```
+$virtualenv env
+$source env/bin/activate
+```
+Pip install requirements
+```
+$pip install -r requirements.txt
+```
+Get the Google QPX API key from https://developers.google.com/qpx-express/v1/how-tos/authorizing
+
+Source necessary environmental variables into the virtualenv (mainly the Google QPX API key).
+
+Start the server
+
+```
+$python server.py
+
+```
+## Running the tests
+
+From the command line:
+```
+$python test_helper.py
+$python test_server.py
+
+```
+
+Screenshots
+
+<img src="/static/homepage.png">
+
+
+<img src="/static/user_search.png">
+
+
+<img src="/static/search_results.png">
+
+
+<img src="/static/user_trips_page.png">
 
 
 
 
 
-### Installing
 
 
 
