@@ -51,16 +51,16 @@ $python test_server.py
 
 Screenshots
 
-<img src="/static/homepage.png">
+<img src="/static/homepage.png/">
 
 
-<img src="/static/user_search.png">
+<img src="/static/user_search.png/">
 
 
-<img src="/static/search_results.png">
+<img src="/static/search_results.png/">
 
 
-<img src="/static/user_trips_page.png">
+<img src="/static/user_trips_page.png/">
 
 
 
